@@ -1,2 +1,2 @@
 # metaescuela
-poryecto final de DAW
+proyecto final de DAW
