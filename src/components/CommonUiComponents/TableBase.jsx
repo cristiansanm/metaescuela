@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
-import { buttonUnderTable } from '../../assets/js/styleObject/TableBase';
+import { useNavigate } from 'react-router-dom';
 import "../../assets/scss/TableBase.scss";
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -21,6 +21,7 @@ const rows = [
 ];
 
 const TableBase = () => {
+  const history = useNavigate();
   return (
     <>
         <TableContainer component={Paper}>
@@ -56,7 +57,14 @@ const TableBase = () => {
             variant="contained"
             className="my__new__button"
         >
-            Este es mi boton
+            {localStorage.getItem("carrito")}
+        </Button>
+        <Button 
+            onClick = {() => history("/pedidos")}
+            variant="contained"
+            className="my__new__button"
+        >
+            Ir a pedidos
         </Button>
     </>
     
