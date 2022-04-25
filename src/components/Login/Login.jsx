@@ -21,8 +21,9 @@ const Login = () => {
       </div>
       <div className="contenedor-formulario-foto">
         <img className="logoPuche" src={logoPuche} alt="logo"/>
-        <div className="contenedor-foumulario" >
-            <img className="logoMetaescuela" src={logoMetaescuela} alt="logoMetaescuela" />
+        <img className="logoMetaescuela" src={logoMetaescuela} alt="logoMetaescuela" />
+        <div className="contenedor-formulario" >
+            <img className="logoMetaescuela2" src={logoMetaescuela} alt="logoMetaescuela" />
             <LoginForm />
         </div>
         

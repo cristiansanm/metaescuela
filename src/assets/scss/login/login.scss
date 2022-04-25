@@ -42,11 +42,15 @@ h4{
     display:flex;
     width: 50%;
 }
-.logoMetaescuela{
+.logoMetaescuela2{
     display:flex;
     width: 20%;
 }
-.contenedor-foumulario{
+.logoMetaescuela{
+    display:none;
+}
+
+.contenedor-formulario{
     background-color: #76D8C8;
     display:flex;
     width: 50%;
@@ -56,4 +60,35 @@ h4{
     align-content: center;
     justify-content: center;
     padding-top: 1rem;
+}
+
+@media screen and (max-width: 800px) {
+    h1,h4{
+        text-align: center;
+    }
+    .barra-color-azul,.logoMetaescuela2,.logoPuche{
+        display: none;
+    }
+    .contenedor-formulario-foto{
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .logoMetaescuela{
+
+        display:flex;
+        width: 20%;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .contenedor-formulario{
+        width: 100%;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+        margin-left: 9rem;
+        margin-right: 9rem;
+        border-radius: 3rem;
+    }
 }
