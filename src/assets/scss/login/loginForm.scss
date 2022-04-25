@@ -1,0 +1,42 @@
+h2{
+    text-align: center;
+}
+.formulario{
+    display: flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+}
+.email{
+    width: 344px;
+    height: 47px;
+    background: #DAE6E5;
+    border: 1px solid #283845;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    margin-bottom:1rem;
+    padding-left: 1rem;
+}
+.password{
+    width: 344px;
+    height: 47px;
+    background: #DAE6E5;
+    border: 1px solid #283845;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    margin-bottom:1rem;
+    padding-left: 1rem;
+}
+button {
+    width: 125px;
+    height: 40px;
+    background: #E98074;
+    color: #F4FBFA;
+    border: 1px solid #283845;
+    box-sizing: border-box;
+    border-radius: 9px;
+}

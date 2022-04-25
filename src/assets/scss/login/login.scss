@@ -1,0 +1,59 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.contenedor-titulo {
+    display:flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+    width: 100%;
+
+}
+body{
+    background: #DAE6E5;
+}
+h1{
+    font-size: 4rem;
+    color: #283845;
+    text-align: right;
+    margin-top: 20px;
+    margin-right: 1rem;
+}
+h4{
+    color: #0F8983;
+    text-align: right;
+    margin-right: 1rem;
+}
+
+.barra-color-azul{
+    display: flex;
+    width: 100%;
+    background: #16C9C0;
+    height: 14px;
+}
+.contenedor-formulario-foto{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    width: 100%;
+}
+.logoPuche{
+    display:flex;
+    width: 50%;
+}
+.logoMetaescuela{
+    display:flex;
+    width: 20%;
+}
+.contenedor-foumulario{
+    background-color: #76D8C8;
+    display:flex;
+    width: 50%;
+    flex-direction: column;
+    flex-wrap:wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding-top: 1rem;
+}
