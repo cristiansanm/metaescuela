@@ -10,6 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login/>}></Route>
+          
           <Route path="/tabla" element={<TableBase/>}></Route>
           <Route path="/pedidos" element={<Orders/>}></Route>
         </Routes>

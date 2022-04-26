@@ -1,8 +1,21 @@
-import React from 'react'
+import { Button } from '@mui/material'
+import Navbar from '../CommonUiComponents/Navbar'
+import TableBase from '../CommonUiComponents/TableBase'
+import ViewTitle from '../CommonUiComponents/ViewTitle'
 
 const Orders = () => {
   return (
-    <div>Orders</div>
+    <div className="">
+      <Navbar/>
+      <ViewTitle title="Pedidos"/>
+      <TableBase/>
+      <Button sx={{
+        margin: '0 50%',
+      }} color="success" variant='contained'>
+        Volver
+      </Button>
+    </div>
+    
   )
 }
 

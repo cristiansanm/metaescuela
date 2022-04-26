@@ -53,19 +53,6 @@ const TableBase = () => {
                 </TableBody>
             </Table>
         </TableContainer>
-        <Button 
-            variant="contained"
-            className="my__new__button"
-        >
-            {localStorage.getItem("carrito")}
-        </Button>
-        <Button 
-            onClick = {() => history("/pedidos")}
-            variant="contained"
-            className="my__new__button"
-        >
-            Ir a pedidos
-        </Button>
     </>
     
   )

@@ -30,7 +30,7 @@ const Login = () => {
       </div>  
 
         <Button onClick={handleTableView}>Ir a tabla</Button>
-        <Button onClick={()=> history("/productos")}>Ir a productos</Button>
+        <Button onClick={()=> history("/pedidos")}>Ir a productos</Button>
         {console.log(localStorage.getItem("carrito"))}
     </>
   )
