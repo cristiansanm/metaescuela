@@ -53,6 +53,13 @@ const TableBase = () => {
                 </TableBody>
             </Table>
         </TableContainer>
+        <Button 
+            onClick = {() => history("/pedidos")}
+            variant="contained"
+            className="my__new__button"
+        >
+            Ir a pedidos
+        </Button>
     </>
     
   )
