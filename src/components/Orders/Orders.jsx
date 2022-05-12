@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import { Button } from '@mui/material'
 import Navbar from '../CommonUiComponents/Navbar'
 import TableBase from '../CommonUiComponents/TableBase'
@@ -17,19 +16,5 @@ const Orders = () => {
       </Button>
     </div>
     
-=======
-import React from 'react'
-import NavBar from '../CommonUiComponents/Miguel/Navbar'
-
-const Orders = () => {
-  return (
-    <>
-    <NavBar/>
-    <div>Orders</div>
-
-    </>
->>>>>>> Stashed changes
-  )
-}
-
+    )}
 export default Orders
