@@ -16,7 +16,5 @@ const Orders = () => {
       </Button>
     </div>
     
-  )
-}
-
+    )}
 export default Orders
