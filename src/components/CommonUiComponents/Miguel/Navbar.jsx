@@ -30,16 +30,16 @@ export default function ButtonAppBar() {
       <Typography noWrap component="div" sx={{ flexGrow: 1 }}>
         <img src={icon} style={{ width: 50, height: 50 }} alt="icon" />
       </Typography>
-      <Typography variant="h6" component="div" sx={{ ml: 3 }} marginLeft='auto' >
+      <Typography variant="p" component="div" sx={{ ml: 3 }} marginLeft='auto' >
         Dashboard
       </Typography>
-      <Typography variant="h6" component="div" sx={{ ml: 3 }} marginLeft='auto'>
+      <Typography variant="p" component="div" sx={{ ml: 3 }} marginLeft='auto'>
         Libros
       </Typography>
-      <Typography variant="h6" component="div" sx={{ ml: 3 }} marginLeft='auto'>
+      <Typography variant="p" component="div" sx={{ ml: 3 }} marginLeft='auto'>
         Tecnoloía
       </Typography>
-      <Typography variant="h6" component="div" sx={{ ml: 3 }} marginLeft='auto'>
+      <Typography variant="p" component="div" sx={{ ml: 3 }} marginLeft='auto'>
         Otros
       </Typography>
       <Typography icon={ShoppingCartIcon} component="div" sx={{ ml: 3 }} marginLeft='auto' color="error">
