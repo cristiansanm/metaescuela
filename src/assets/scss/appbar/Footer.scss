@@ -1,0 +1,15 @@
+#main-footer{
+    display:none
+}
+
+@media screen and (max-width: 992px) {
+    #main-footer{
+        display:inline-block;
+        background-color: #283845;
+        width: 100%;
+        height: 50px;
+        text-align: end;
+        
+    }
+ 
+}   
