@@ -1,10 +1,12 @@
 // import { TextField } from '@mui/material'
 import '../../assets/scss/login/loginForm.scss'
-import React from 'react'
+import { useState } from 'react'
+import {useNavigate} from 'react-router-dom';
 
 const LoginForm = () => {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const history =  useNavigate();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const procesarDatos = e => {
     e.preventDefault()
     if(!email.trim()) {
@@ -21,7 +23,7 @@ const LoginForm = () => {
 
   return (
     <>  
-      <h2>Login</h2>
+      <h2 className="login__title">Login</h2>
         <form className="formulario" onSubmit={procesarDatos}>
           <div>
             
@@ -43,7 +45,13 @@ const LoginForm = () => {
               value={password}
               />
           </div>
-          <button type="submit">Ingresar</button>
+          <button 
+            onClick={() => history("/products")} 
+            type="submit"
+            className="login__button"
+          >
+            Ingresar
+          </button>
         </form>
         {/*
         <TextField className="email"

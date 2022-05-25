@@ -5,18 +5,16 @@ import { Button } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import '../../assets/scss/login/login.scss'
 const Login = () => {
-  const history = useNavigate()
+  const history = useNavigate();
   const handleTableView = () => {
-    history("/tabla")
-    //window.location.href = "tabla"
+    history("/tabla");
   }
-  const carrito = localStorage.setItem("carrito", "me llamo carrito");
 
   return (
     <>  
       <div className='contenedor-titulo'>
-          <h1>METAESCUELA</h1>
-          <h4>Estudiar nunca ha sido tan barato</h4>
+          <h1 className='app__title'>METAESCUELA</h1>
+          <h4 className='app__subtitle'>Estudiar nunca ha sido tan barato</h4>
           <div className="barra-color-azul"> </div>
       </div>
       <div className="contenedor-formulario-foto">
@@ -31,7 +29,6 @@ const Login = () => {
 
         <Button onClick={handleTableView}>Ir a tabla</Button>
         <Button onClick={()=> history("/pedidos")}>Ir a productos</Button>
-        {console.log(localStorage.getItem("carrito"))}
     </>
   )
 }

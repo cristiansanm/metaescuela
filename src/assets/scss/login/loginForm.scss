@@ -1,4 +1,4 @@
-h2{
+.login__title{
     text-align: center;
 }
 .formulario{
@@ -31,7 +31,7 @@ h2{
     margin-bottom:1rem;
     padding-left: 1rem;
 }
-button {
+.login__button {
     width: 125px;
     height: 40px;
     background: #E98074;
@@ -39,7 +39,23 @@ button {
     border: 1px solid #283845;
     box-sizing: border-box;
     border-radius: 9px;
+
+    &:hover{
+        width: 125px;
+        height: 40px;
+        background: #e38f86;
+        color: #F4FBFA;
+        border: 1px solid #283845;
+        box-sizing: border-box;
+        border-radius: 9px;
+        cursor: pointer;
+    }
+    &:active{
+        transform: translateY(2px);
+        background-color: #e65141;
+    }
 }
+
 @media screen and (max-width: 800px) {
 
     h2{

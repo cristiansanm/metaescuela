@@ -3,6 +3,7 @@ import './App.css';
 import TableBase from './components/CommonUiComponents/TableBase';
 import Login from './components/Login/Login';
 import Orders from './components/Orders/Orders';
+import Products from './components/Products/Products';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           
           <Route path="/tabla" element={<TableBase/>}></Route>
           <Route path="/pedidos" element={<Orders/>}></Route>
+          <Route path="/products" element={<Products/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
