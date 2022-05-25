@@ -1,0 +1,93 @@
+.item__container {
+    min-width: 200px;
+    width: 300px;
+    max-width: 350px;
+    padding: 20px 10px;
+    background-color: #EAF4F4;
+    border-radius: 20px;
+    color: #283845;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    @media only screen and (max-width:1281px){
+        min-width: 150px;
+        width: 200px;
+        max-width: 350px;
+        padding: 20px 10px;
+    }
+}
+.item__title{
+    text-align: center;
+    .item__subtitle{
+        font-size: 0.65rem;
+        color: #8F8F8F;
+    }
+    @media only screen and (max-width:1281px){
+        .item__subtitle{
+            font-size: 0.5rem;
+            color: #8F8F8F;
+        }
+        font-size: 0.8rem;
+    }
+}
+.item__divider{
+    margin: 5px 0;
+}
+.item__image{
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    @media only screen and (max-width:1281px){
+        img{
+            width: 40%;
+        }
+    }
+}
+.item__info{
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    div{
+        padding: 2px 5px;
+        border-radius: 5px;
+        background-color: #BBE7DF;
+    }
+    @media only screen and (max-width:1281px){
+        display: flex;
+        flex-flow: row wrap;
+        font-size: 0.6rem;
+        div{
+            padding: 2px 3px;
+            font-size: 0.6rem;
+        }
+    }
+}
+.item__button{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    button{
+        padding: 4px 8px;
+        border: 2px solid #283845;
+        border-radius: 5px; 
+        background-color: #FBEEC2;
+        color: #283845;
+        font-size: 0.9rem;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif;
+    }
+    @media only screen and (max-width:1281px){
+        button{
+            padding: 2px 5px;
+            font-size: 0.7rem;
+        }
+    }
+    button:hover{
+        background-color: #fae7a9;
+        cursor: pointer;
+    }
+    button:active{
+        transform: translateY(2px);
+        background-color: #f3cd5d;
+    }
+    
+}
