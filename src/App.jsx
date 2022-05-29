@@ -13,7 +13,7 @@ function App() {
           <Route path="/" element={<Login/>}></Route>
           
           <Route path="/tabla" element={<TableBase/>}></Route>
-          <Route path="/pedidos" element={<Orders/>}></Route>
+          <Route path="/orders" element={<Orders/>}></Route>
           <Route path="/products" element={<Products/>}></Route>
         </Routes>
       </BrowserRouter>

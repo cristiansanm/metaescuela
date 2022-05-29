@@ -39,7 +39,7 @@ export default function MenuAppBar() {
     return (
         <div id="main-footer">
 
-            <Box sx={{ flexGrow: 1, backgroundColor: '#283845', }} >
+            <Box sx={{ flexGrow: 1, backgroundColor: '#283845', display: 'fixed'}} >
                 <FormGroup>
                     <FormControlLabel
                         control={

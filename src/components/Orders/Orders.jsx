@@ -1,20 +1,54 @@
-import { Button } from '@mui/material'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import TableBase from '../CommonUiComponents/TableBase'
 import ViewTitle from '../CommonUiComponents/ViewTitle'
 import MenuAppBar from '../CommonUiComponents/Miguel/Footer'
-
+import NavBar from '../CommonUiComponents/NavBar'
+import { Grid } from '@mui/material'
+import orderIcon from '../../assets/img/Icons/orderIcon.png'
+import * as ordersStyle from '../../assets/js/styleObject/Orders/OrdersStyle'
+import "../../assets/scss/Orders/Orders.scss"
 const Orders = () => {
+  const navigate = useNavigate();
+  const ordersHeaders = 
+  [
+    'ID', 
+    'Cantidad de productos', 
+    'Total', 
+    'Fecha de entrega', 
+    'Estado', 
+    'Detalle'
+  ]
   return (
-    <div className="">
-      <ViewTitle title="Pedidos"/>
-      <TableBase/>
-      <Button sx={{
-        margin: '0 50%',
-      }} color="success" variant='contained'>
-        Volver
-      </Button>
+    <>
+      <NavBar/>
+      <Grid sx={ordersStyle.ordersContainer} container>
+        <Grid container>
+          <Grid item xs={1}>
+            <img width="64" src={orderIcon} alt="cart"/>
+          </Grid>
+          <Grid sx={ordersStyle.ordersTitle} item xs={11}>
+            <ViewTitle title="Ordenes" />
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <TableBase data={''} headers={ordersHeaders}/>
+          </Grid>
+        </Grid>
+        <Grid sx={{mt:3}} justifyContent="center" container>
+          <Grid item sx={3}>
+            <button
+              className='button__orders__return'
+              onClick={() => navigate('/products')}
+            >
+              Volver a comprar
+            </button>
+          </Grid>
+        </Grid>
+      </Grid>
       <MenuAppBar/>
-    </div>
+    </>
     
     )}
 export default Orders;

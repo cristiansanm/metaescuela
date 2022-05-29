@@ -6,7 +6,9 @@ import ProductsController from '../../assets/controllers/ProductsController'
 import NavBar from '../CommonUiComponents/NavBar';
 import { data } from "../../assets/js/mockupData.js"
 import { productsContainer } from '../../assets/js/styleObject/Products/ProductsContainer' 
-import { productFilters } from '../../assets/js/styleObject/Products/ProducFilters'
+import { productFilters, productsFilterMobile, navbarStyle } from '../../assets/js/styleObject/Products/ProducFilters'
+import Footer from '../CommonUiComponents/Miguel/Footer'
+import ProductsFilterMobile from './ProductsFilterMobile'
 const getData = async() => {
   let products = await ProductsController.getProducts();
   console.log(products)
@@ -22,14 +24,23 @@ const Products =  () => {
   },[])
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid 
+        sx = {navbarStyle} 
+        item xs={12}
+      >
         <NavBar/>
       </Grid>
-      <Grid sx={productFilters} item xs={12} sm={12} md={3}>
+      <Grid sx={productFilters} item lg={3}>
         <ProductsFilter/>
       </Grid>
-      <Grid sx={productsContainer} item xs={12} sm={12} md={9}>
+      <Grid sx={productsFilterMobile} item xs={12}>
+        <ProductsFilterMobile/>
+      </Grid>
+      <Grid sx={productsContainer} item xs={12} sm={12} md={12} lg={9}>
         <ProductsList itemListData={itemListData}/>
+      </Grid>
+      <Grid item xs={12}>
+        <Footer/>
       </Grid>
     </Grid>
   )

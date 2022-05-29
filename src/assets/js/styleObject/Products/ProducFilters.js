@@ -1,6 +1,5 @@
 
 export const productFilters = {
-    display: 'flex',
     flexFlow: 'column',
     width: '100%',
     alignItems: 'center',
@@ -10,13 +9,17 @@ export const productFilters = {
     scrollBehavior: 'smooth',
     '@media only screen and (max-width: 1281px)': {
         height: '91vh',
-    }
+    },
+    '@media only screen and (min-width: 1200px)': {
+        display: 'flex',
+    },
+    display: 'none',
 }
 
 export const  checkboxContainer = {
-    marginRight: "10vw",
-    '@media only screen and (max-width: 1281px)': {
-        marginRight: "8vw",
+    marginRight: "8vw",
+    '@media only screen and (min-width: 1281px)': {
+        marginRight: "10vw",
     }
 }
 
@@ -54,7 +57,10 @@ export const filterSearchButton = {
     padding: "15px",
     '&:active': {
         transform: "translateY(2px)",
-    }
+    },
+    '& svg': {
+        marginLeft: '5px'
+    },
 }
 
 export const filterDeleteButton = {
@@ -63,5 +69,23 @@ export const filterDeleteButton = {
     padding: "15px",
     '&:active': {
         transform: "translateY(2px)",
+    },
+    '& svg': {
+        marginLeft: '5px'
+    },
+
+}
+
+export const navbarStyle = {
+    '@media only screen and (max-width: 992px)': {
+        display: 'none'
     }
+}
+export const productsFilterMobile = {
+    '@media only screen and (min-width: 1200px)': {
+        display: 'none',
+    },
+    marginTop: '20px',
+    display: 'block',
+    
 }

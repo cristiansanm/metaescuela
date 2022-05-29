@@ -17,7 +17,7 @@ import {
   filterSearchButton,
   filterDeleteButton
 } from '../../assets/js/styleObject/Products/ProducFilters';
-import { FormControl, IconButton, Radio, RadioGroup, Tooltip } from '@mui/material';
+import { Button, FormControl, IconButton, Radio, RadioGroup, Tooltip } from '@mui/material';
 const ProductsFilter = () => {
   const [category, setCategory] = useState("libros");
   const [education, setEducation] = useState("");
@@ -29,7 +29,18 @@ const ProductsFilter = () => {
     setGrade("");
     setPrice("");
   }
-   
+  const handleEducation = (e) => {
+    setEducation(e.target.value);
+    setGrade("");
+    setPrice("");
+  }
+  const handleGrade = (e) => {
+    setGrade(e.target.value);
+    setPrice("");
+  }
+  const handlePrice = (e) => {
+    setPrice(e.target.value);
+  }
   return (
     <div>
       <div className="filters__header" name="categoria">
@@ -55,15 +66,11 @@ const ProductsFilter = () => {
         <AccordionDetails sx={accordionContent}>
             {category === "libros" ? (
               <FormControl sx={checkboxContainer}>
-                {`${education}${grade}`}
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   value={education}
                   name="radio-buttons-group"
-                  onChange={(e) => {
-                    setEducation(e.target.value);
-                    setGrade("");
-                  }}
+                  onChange={handleEducation}
                   sx={checkboxLabel}
                 >
                   <FormControlLabel 
@@ -85,12 +92,11 @@ const ProductsFilter = () => {
               </FormControl>  
             ) : (
               <FormControl sx={checkboxContainer}>
-                {education}
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   value={education}
                   name="radio-buttons-group"
-                  onChange={(e) => setEducation(e.target.value)}
+                  onChange={handleEducation}
                   sx={checkboxLabel}
                 >
                   <FormControlLabel 
@@ -132,12 +138,11 @@ const ProductsFilter = () => {
             {/* Setting grade */}
             {education === "fp_" ? (
               <FormControl sx={checkboxContainer}>
-                {`${education}${grade}`}
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   value={grade}
                   name="radio-buttons-group"
-                  onChange={(e) => setGrade(e.target.value)}
+                  onChange={handleGrade}
                   sx={checkboxLabel}
                 >
                   <FormControlLabel 
@@ -164,7 +169,7 @@ const ProductsFilter = () => {
                   aria-labelledby="demo-radio-buttons-group-label"
                   value={grade}
                   name="radio-buttons-group"
-                  onChange={(e) => setGrade(e.target.value)}
+                  onChange={handleGrade}
                   sx={checkboxLabel}
                 >
                   <FormControlLabel 
@@ -209,12 +214,11 @@ const ProductsFilter = () => {
         </AccordionSummary>
         <AccordionDetails sx={accordionContent}>
           <FormControl sx={checkboxContainer}>
-            {`${price}`}
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               value={price}
               name="radio-buttons-group"
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={handlePrice}
               sx={checkboxLabel}
             >
               <FormControlLabel 
@@ -243,7 +247,7 @@ const ProductsFilter = () => {
       </Accordion>
       <div className="filter__buttons">
         <Tooltip title="Buscarfiltros">
-          <IconButton
+          <Button
             sx={filterSearchButton}
             onClick={() => {
               if(category === "libros") {
@@ -256,11 +260,11 @@ const ProductsFilter = () => {
               
             }}
           >
-            <SearchIcon />
-          </IconButton>
+            Buscar filtros<SearchIcon />
+          </Button>
         </Tooltip>
         <Tooltip title="Eliminar filtros">
-          <IconButton
+          <Button
             sx={filterDeleteButton}
             onClick={() => {
               setEducation("");
@@ -269,8 +273,8 @@ const ProductsFilter = () => {
               console.log("Filters cleared!")
             }}
           >
-            <BackspaceIcon />
-          </IconButton>
+            Borrar filtro <BackspaceIcon />
+          </Button>
         </Tooltip>
       </div>
     </div>

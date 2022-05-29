@@ -1,0 +1,19 @@
+.button__orders__return {
+    padding: 12px 8px;
+    background-color: #16C9C0;
+    color: #F4FBFA;
+    border-radius: 9px;
+    border: 1px solid #283845;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    &:hover{
+        background-color: #27aea8;
+        color: #F4FBFA;
+    }
+    &:active{
+        background-color: #1c716d;
+        color: #F4FBFA;
+        transform: translateY(2px);
+    }
+}
