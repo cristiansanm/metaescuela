@@ -1,10 +1,12 @@
 .button__orders__return {
-    padding: 12px 8px;
+    padding: 0 10px;
+    height: 40px;
     background-color: #16C9C0;
+    font-family: "Poppins", serif;
     color: #F4FBFA;
     border-radius: 9px;
     border: 1px solid #283845;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 1rem;
     cursor: pointer;
     &:hover{

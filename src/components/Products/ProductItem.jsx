@@ -2,9 +2,11 @@ import React from 'react'
 import "../../assets/scss/Products/ProductItem.scss"
 import { convertSubCategories } from '../../assets/js/formaters'
 import logo from '../../assets/img/Login/Logo_MetaEscuela.png'
+import { useNavigate } from 'react-router-dom'
 const verifyCharacter = (character) => 
   character.includes("_") ? true : false 
 const ProductItem = ({itemData}) => {
+  const navigate = useNavigate()
   return (
     <>  
         {itemData && (
@@ -56,7 +58,9 @@ const ProductItem = ({itemData}) => {
                   </div>
                 </div>
                 <div className='item__button'>
-                  <button>Ver detalle</button>
+                  <button
+                    onClick={() => navigate('/products/1')}
+                  >Ver detalle</button>
                 </div>
             </div>
         )}

@@ -24,12 +24,6 @@ const Products =  () => {
   },[])
   return (
     <Grid container>
-      <Grid 
-        sx = {navbarStyle} 
-        item xs={12}
-      >
-        <NavBar/>
-      </Grid>
       <Grid sx={productFilters} item lg={3}>
         <ProductsFilter/>
       </Grid>

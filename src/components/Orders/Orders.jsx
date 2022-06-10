@@ -8,6 +8,7 @@ import { Grid } from '@mui/material'
 import orderIcon from '../../assets/img/Icons/orderIcon.png'
 import * as ordersStyle from '../../assets/js/styleObject/Orders/OrdersStyle'
 import "../../assets/scss/Orders/Orders.scss"
+import OrdersTable from './OrdersTable'
 const Orders = () => {
   const navigate = useNavigate();
   const ordersHeaders = 
@@ -15,13 +16,11 @@ const Orders = () => {
     'ID', 
     'Cantidad de productos', 
     'Total', 
-    'Fecha de entrega', 
-    'Estado', 
-    'Detalle'
+    'Creada', 
+    'Ver detalle', 
   ]
   return (
     <>
-      <NavBar/>
       <Grid sx={ordersStyle.ordersContainer} container>
         <Grid container>
           <Grid item xs={1}>
@@ -33,7 +32,7 @@ const Orders = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <TableBase data={''} headers={ordersHeaders}/>
+            <OrdersTable data={''} headers={ordersHeaders}/>
           </Grid>
         </Grid>
         <Grid sx={{mt:3}} justifyContent="center" container>
@@ -42,7 +41,7 @@ const Orders = () => {
               className='button__orders__return'
               onClick={() => navigate('/products')}
             >
-              Volver a comprar
+              Ir a productos
             </button>
           </Grid>
         </Grid>
