@@ -8,14 +8,13 @@ import Orders from './components/Orders/Orders';
 import OrderView from './components/Orders/SingleOrder/OrderView';
 import Products from './components/Products/Products';
 import ProductView from './components/Products/ProductView';
-
 function App() {
   return (
     <div>
       <BrowserRouter>
       <NavBar/>
         <Routes>
-          <Route path="/" element={<Login/>}></Route>
+          <Route path="/login" element={<Login/>}></Route>
           
           <Route exact path="/tabla" element={<TableBase/>}></Route>
           <Route exact path="/orders" element={<Orders/>}></Route>

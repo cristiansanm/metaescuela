@@ -1,29 +1,24 @@
 .login__title{
     text-align: center;
+    color: #283845;
+    font-size: 32px
+}
+.form__container{
+    margin: auto 10%
 }
 .formulario{
     display: flex;
     flex-direction: column;
     flex-wrap:wrap;
+    gap: 20px;
     align-items: center;
     width: 100%;
     margin-top: 1rem;
 }
-.email{
+.input__form{
     width: 344px;
     height: 47px;
-    background: #DAE6E5;
-    border: 1px solid #283845;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 7px;
-    margin-bottom:1rem;
-    padding-left: 1rem;
-}
-.password{
-    width: 344px;
-    height: 47px;
-    background: #DAE6E5;
+    background: #F4FBFA;
     border: 1px solid #283845;
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -32,18 +27,18 @@
     padding-left: 1rem;
 }
 .login__button {
-    width: 125px;
+    width: 140px;
     height: 40px;
-    background: #E98074;
+    background: #4399A5;
     color: #F4FBFA;
     border: 1px solid #283845;
     box-sizing: border-box;
     border-radius: 9px;
-
+    font-size: 18px;
+    font-weight: 500;
+    font-family: "Poppins", serif;
     &:hover{
-        width: 125px;
-        height: 40px;
-        background: #e38f86;
+        background: #16C9C0;
         color: #F4FBFA;
         border: 1px solid #283845;
         box-sizing: border-box;
@@ -52,7 +47,7 @@
     }
     &:active{
         transform: translateY(2px);
-        background-color: #e65141;
+        background-color: #75DDD8;
     }
 }
 

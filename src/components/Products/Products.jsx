@@ -3,24 +3,26 @@ import {  useState, useEffect } from 'react'
 import ProductsFilter from './ProductsFilter'
 import ProductsList from './ProductsList'
 import ProductsController from '../../assets/controllers/ProductsController'
-import NavBar from '../CommonUiComponents/NavBar';
 import { data } from "../../assets/js/mockupData.js"
 import { productsContainer } from '../../assets/js/styleObject/Products/ProductsContainer' 
-import { productFilters, productsFilterMobile, navbarStyle } from '../../assets/js/styleObject/Products/ProducFilters'
+import { productFilters, productsFilterMobile } from '../../assets/js/styleObject/Products/ProducFilters'
 import Footer from '../CommonUiComponents/Miguel/Footer'
 import ProductsFilterMobile from './ProductsFilterMobile'
-const getData = async() => {
-  let products = await ProductsController.getProducts();
-  console.log(products)
-  return products;
-}
-getData();
+
+
 const Products =  () => {
   const [itemListData, setItemListData] = useState([])
+  const userId = localStorage.getItem('id')
+  console.log(localStorage.getItem('id'))
+  console.log(localStorage.getItem('user'))
   useEffect(() => {
-    // getData()
-    // .then(data => setItemListData(data))
-    setItemListData(data)
+    ProductsController.getProducts({userId})
+    .then(products => {
+      let { data } = products;
+      setItemListData(data)
+    }).catch(err => {
+      console.log(err)
+    })
   },[])
   return (
     <Grid container>

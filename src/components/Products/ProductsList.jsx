@@ -1,6 +1,6 @@
 import React from 'react'
 import ProductItem from './ProductItem'
-
+import LoadingLogo from "../Modals/LoadingLogo"
 const ProductsList = ({itemListData}) => {
   return (
     <>
@@ -10,7 +10,7 @@ const ProductsList = ({itemListData}) => {
                 <ProductItem itemData = {item}/>
             </div>
         )
-    ): "Cargando..."}
+    ): <LoadingLogo/>}
         
     </>
   )

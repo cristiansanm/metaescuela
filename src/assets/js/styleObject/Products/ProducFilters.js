@@ -46,7 +46,7 @@ export const accordionTitle = {
 }
 
 export const accordionContent = {
-    backgroundColor: '#BBE7DF',
+    backgroundColor: '#EAF4F4',
     color: "#283845",
     
 }
@@ -55,6 +55,8 @@ export const filterSearchButton = {
     backgroundColor: '#76D8C8',
     color: "#F4FBFA",
     padding: "15px",
+    fontSize: "18px",
+    textTransform: 'capitalize',
     '&:active': {
         transform: "translateY(2px)",
     },
@@ -67,6 +69,8 @@ export const filterDeleteButton = {
     backgroundColor: '#E98074',
     color: "#F4FBFA",
     padding: "15px",
+    textTransform: 'capitalize',
+    fontSize: "18px",
     '&:active': {
         transform: "translateY(2px)",
     },

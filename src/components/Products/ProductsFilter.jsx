@@ -17,7 +17,7 @@ import {
   filterSearchButton,
   filterDeleteButton
 } from '../../assets/js/styleObject/Products/ProducFilters';
-import { Button, FormControl, IconButton, Radio, RadioGroup, Tooltip } from '@mui/material';
+import { Button, FormControl, Radio, RadioGroup, Tooltip } from '@mui/material';
 const ProductsFilter = () => {
   const [category, setCategory] = useState("libros");
   const [education, setEducation] = useState("");

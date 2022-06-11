@@ -7,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
 import logo from "../../../assets/img/Login/Logo_MetaEscuela.png"
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,7 +50,6 @@ const rows = [
 ];
 
 const TableSingleOrder = ({ data, headers }) => {
-  const navigate = useNavigate();
   return (
     <>
         <TableContainer sx={{height: "450px",}} component={Paper}>

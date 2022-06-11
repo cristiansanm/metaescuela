@@ -23,11 +23,21 @@
     text-align: right;
     margin-right: 1rem;
 }
-
+.forms_container{
+    color: #283845;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+    @media only screen and (max-width: 1280px){
+        gap: 0.5rem;
+    }
+    
+}
 .barra-color-azul{
     display: flex;
     width: 100%;
-    background: #16C9C0;
+    background: #76D8C8;
     height: 14px;
 }
 .contenedor-formulario-foto{
@@ -35,31 +45,68 @@
     flex-direction: row;
     flex-wrap:wrap;
     width: 100%;
+
 }
 .logoPuche{
-    display:flex;
-    width: 50%;
-}
-.logoMetaescuela2{
-    display:flex;
-    width: 20%;
-}
-.logoMetaescuela{
-    display:none;
+    width: 990px;
+    @media only screen and (max-width: 1280px){
+        width: 770px;
+    }
 }
 
-.contenedor-formulario{
-    background-color: #76D8C8;
-    display:flex;
-    width: 50%;
+.forms__footer{
+    color: #283845;
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
     flex-direction: column;
-    flex-wrap:wrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    padding-top: 1rem;
+    width: 100%;
+    gap: 0.8rem;
+    justify-content: space-between;
+    hr{
+        margin: 0 auto;
+        width: 90%;
+        border: 1.5px solid #283845;
+        background-color: #283845;
+        margin-top: 10px;
+    }
+    .forms__options{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 0.9rem;
+        justify-content:center;
+        align-items: center;
+        font-weight: 600;
+        margin-bottom: 15px;
+        button{
+            height:40px;
+            border: 1px solid #283845;
+            padding: 2% 3%;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: "Poppins", serif;
+            border-radius: 9px;
+            cursor: pointer;
+        }
+    }
 }
 
+.triangle {
+    width: 0; 
+    height: 0; 
+    border-left: 350px solid transparent;
+    border-right:400px solid transparent;
+    border-top:625px solid #76D8C8;
+    position: relative;
+    top: -625px;
+    left: 30%;
+    z-index: -1;
+    transform-origin: top left;
+    transform: rotate(0deg);
+}
 @media screen and (max-width: 800px) {
     h1,h4{
         text-align: center;

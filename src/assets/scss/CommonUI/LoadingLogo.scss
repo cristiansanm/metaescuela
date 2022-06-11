@@ -1,0 +1,13 @@
+.img__logo{
+    animation: mylogo 3s infinite;
+}
+.sad__face__animation{
+    animation: sadface 3s infinite;
+}
+@keyframes mylogo{
+    50% {transform: rotate(360deg);} 
+}
+@keyframes sadface{
+    50% {transform: translateY(10px);} 
+}
+    

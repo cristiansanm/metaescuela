@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormControl, Grid, IconButton, InputLabel, MenuItem, Select } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -20,11 +19,14 @@ export default function AddProductButton() {
   const [price, setPrice] = useState('');
   const [subCategory, setSubCategory] = useState('');
   const [image, setImage] = useState('');
-
+  const [uploadImg, setUploadImg] = useState('');
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const handleUploadImg = (e) => {
+    let img = URL.createObjectURL(e.target.files[0]);
+    setUploadImg(img)
+  }
   const handleClose = () => {
     setOpen(false);
   };
@@ -38,7 +40,7 @@ export default function AddProductButton() {
         product_availability: true,
         seller_id_fk: 1,
         product_stock: 1,
-        product_image: ""
+        product_image: image
       }
       await ProductController.createProduct(payload);
       alert("Producto agregado");
@@ -78,14 +80,32 @@ export default function AddProductButton() {
         </DialogTitle>
         <hr className="modal__divider"/>
         <DialogContent>
-          <div className="insert__image__container">
-            <label htmlFor="inputPhoto">
-            <input id="inputPhoto" type="file"/>
-            <div>
-              <AddIcon sx={{color: "#283845", fontSize: "4rem"}}/>
-            </div>
-            </label>
-          </div>
+          {uploadImg ?
+            (<div
+              style={{
+                display: "flex",
+                flexFlow: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%"
+              }}
+              >
+              <img src={uploadImg} alt="imgupload" width="150" />
+              <button onClick={()=> setUploadImg("")}>Eliminiar</button>
+            </div>)
+            : (
+              <div className="insert__image__container">
+                <label htmlFor="inputPhoto">
+                  <div>
+                    <AddIcon sx={{color: "#283845", fontSize: "4rem"}}/>
+                  </div>
+                  <input type="file"  accept="image/*" name="image" id="file"  onChange={handleUploadImg}/>
+                </label>
+              </div>
+            )
+          }
+          
+          
           <form action="">
             <FormControl fullWidth>
               <InputLabel id="subcatogory-id">Subcategoría</InputLabel>

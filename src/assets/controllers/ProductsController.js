@@ -1,10 +1,10 @@
 import db from "./DataBaseConection.js";
 
 class ProdctsController {
-    static async getProducts() {
+    static async getProducts(payload) {
         try {
-            const response = await db.get("/products/getAllProducts");
-            return response.data;
+            const response = await db.post("/product/getAll", payload);
+            return response;
         } catch (error){
             throw error;
         }
@@ -12,7 +12,7 @@ class ProdctsController {
     static async createProduct(payload){
         try{
             const response = await db.post("/product/createProduct", payload)
-            return response.data;
+            return response;
         }catch(error){
             throw error
         }

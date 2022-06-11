@@ -1,11 +1,10 @@
 import {  useState } from 'react'
-import { Button, Grid, IconButton } from '@mui/material'
+import { Grid, IconButton } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom'
 import logo from "../../assets/img/Login/Logo_MetaEscuela.png"
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { singleProductContainer } from '../../assets/js/styleObject/ProductView/ProductView';
 import "../../assets/scss/ProductView/ProductView.scss"
 const ProductView = (product) => {
     const navigate = useNavigate()

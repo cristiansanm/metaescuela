@@ -1,6 +1,6 @@
 import React from 'react'
 import "../../assets/scss/Products/ProductItem.scss"
-import { convertSubCategories } from '../../assets/js/formaters'
+import { fkSubcateory } from '../../assets/js/formaters'
 import logo from '../../assets/img/Login/Logo_MetaEscuela.png'
 import { useNavigate } from 'react-router-dom'
 const verifyCharacter = (character) => 
@@ -15,15 +15,17 @@ const ProductItem = ({itemData}) => {
                   <h3>{itemData?.product_name}</h3>
                   <div>
                     <span className='item__subtitle'>
-                      Categoría: <b>{itemData?.product_category}</b>
+                      Categoría: 
+                      <b>
+                        {itemData?.subcategory_id_fk >= 10 
+                        ?
+                          "Tecnología" : "Libros"}
+                      </b>
                     </span>
                     <span className='item__subtitle'>
                       {" "}| Subcategoría: {" "}
                       <b>
-                        {verifyCharacter(itemData?.product_subcategory) ?
-                          convertSubCategories[itemData?.product_subcategory] : 
-                          itemData?.product_subcategory
-                          } 
+                        {fkSubcateory[itemData?.subcategory_id_fk]}
                       </b>
                     </span>
                   </div>

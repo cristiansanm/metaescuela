@@ -2,14 +2,14 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
 import icon from "../../assets/img/NavBar/icon.png"
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import '../../assets/scss/appbar/Navbar.scss'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import * as NavBarStyles from '../../assets/js/styleObject/CommonUI/NavBar.js'
-
+import { Grid } from '@mui/material';
+import cartIcon from "../../assets/img/Icons/cartIcon.png"
+import avatar from "../../assets/img/Icons/avatar.png"
+import Logout from '../Login/Logout';
 export default function NavBar() {
   return (
     <Box
@@ -21,64 +21,76 @@ export default function NavBar() {
           backgroundColor : "#283845", 
         }}>
         <Toolbar>
-          <Typography noWrap component="div" sx={{ flexGrow: 1 }}>
-            <a href="/dashboard">
-              <img src={icon} style={{ width: 50, height: 50 }} alt="icon" />
-            </a>
-          </Typography>
-          <NavLink
-            style={
-              ({ isActive }) => 
-                isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
-            }
-            to="/dashboard">
-            Dashboard
-          </NavLink>
-          <NavLink 
-            style={
-              ({ isActive }) => 
-                isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
-            }
-            to="/products"
-          >
-            Productos
-          </NavLink>  
-          <NavLink 
-            style={
-              ({ isActive }) => 
-                isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
-            }  
-            to="/orders"
-          >
-            Ordenes
-          </NavLink>
-          <NavLink 
-            style={
-              ({ isActive }) => 
-                isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
-            }  
-            to="/seller"
-          >
-            Vendedor
-          </NavLink>
-          <NavLink 
-            style={
-              ({ isActive }) => 
-                isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
-            }
-            to="/cart"
-          >
-            <ShoppingCartIcon sx={{color: '#F4FBFA'}}/>
-          </NavLink>
-          <NavLink 
-            style={
-              ({ isActive }) => 
-                isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
-            }
-            to="/user"
-          >
-            <AccountCircleIcon sx={{color: '#F4FBFA'}}/>
-          </NavLink>
+          <Grid container>
+            <Grid 
+              sx={{display: "flex", alignItems: "center", gap: 5}} 
+              item 
+              xs={8}
+            >
+              <a href="/products">
+                <img src={icon} style={{ width: 40, height: 38 }} alt="icon" />
+              </a>
+              <div>
+                <NavLink 
+                  style={
+                    ({ isActive }) => 
+                      isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
+                  }
+                  to="/products"
+                >
+                  Productos
+                </NavLink>  
+                <NavLink 
+                  style={
+                    ({ isActive }) => 
+                      isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
+                  }  
+                  to="/orders"
+                >
+                  Ordenes
+                </NavLink>
+                <NavLink 
+                  style={
+                    ({ isActive }) => 
+                      isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
+                  }  
+                  to="/seller"
+                >
+                  Vendedor
+                </NavLink>
+              </div>
+            </Grid>
+            <Grid 
+              sx={{display: "flex", alignItems: "center", justifyContent: "flex-end",gap: 2}}
+              item 
+              xs={4}
+            >
+              <NavLink 
+                style={
+                  ({ isActive }) => 
+                    isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
+                }
+                to="/cart"
+              >
+                <img src={cartIcon} alt="cartIcon" width="32" />
+              </NavLink>
+              <NavLink 
+                style={
+                  ({ isActive }) => 
+                    isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
+                }
+                to="/user"
+
+              >
+                <div style={{display: 'flex', alignItems: 'center', gap: 5}}>
+                  <img src={avatar} alt="avatar" width="32"/>
+                  <span>Cuenta</span>
+                </div>
+                
+              </NavLink>
+              <Logout />
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </Box >
