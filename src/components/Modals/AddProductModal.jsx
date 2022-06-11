@@ -11,7 +11,8 @@ import "../../assets/scss/CommonUI/AddProductModal.scss"
 import add from "../../assets/img/Icons/add_product.png"
 import { subCategoriesArray } from "../../assets/js/formaters"
 import ProductController from "../../assets/controllers/ProductsController"
-
+import SnackMessages from "../CommonUiComponents/SnackMessages"
+import { LaptopWindows, Refresh } from '@material-ui/icons';
 export default function AddProductButton() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
@@ -20,6 +21,16 @@ export default function AddProductButton() {
   const [subCategory, setSubCategory] = useState('');
   const [image, setImage] = useState('');
   const [uploadImg, setUploadImg] = useState('');
+  // Variables para el SnackMessages 
+  const [openSnack, setOpenSnack] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
+  const handleCloseSnack = () => {
+    setOpenSnack(false);
+  }
+
+  //
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -43,7 +54,13 @@ export default function AddProductButton() {
         product_image: image
       }
       await ProductController.createProduct(payload);
-      alert("Producto agregado");
+        setOpenSnack(true);
+        setMessage("Producto creado correctamente.")
+        setType("success")
+        setTimeout( () => {
+          handleClose()
+          window.location.reload()
+        },2000)
     }catch(e){
       console.log(e)
     }
@@ -183,6 +200,7 @@ export default function AddProductButton() {
           <Button variant="contained" color="primary" onClick={sendData}>Registrar</Button>
         </DialogActions>
       </Dialog>
+      <SnackMessages open={openSnack} handleClose={handleCloseSnack} type={type} message={message}/>
     </div>
   );
 }
