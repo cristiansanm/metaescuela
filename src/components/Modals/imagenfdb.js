@@ -24,14 +24,5 @@ export default function ModalEmpresa() {
             alert(error);
         }
     };
-    return (
-        <aside id="modal" className="modal">
-            <div className="content-modal">
-                <header>
-                    <input type="file" name="imagen" onChange={changeImagen} />
-                    <button onClick={uploadImage} >GUARDAR</button>
-                </header>
-            </div>
-        </aside>
-    )
+ 
 }

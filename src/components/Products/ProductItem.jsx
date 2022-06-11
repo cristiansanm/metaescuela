@@ -32,7 +32,7 @@ const ProductItem = ({itemData}) => {
                 </div>
                 <hr className='item__divider'/>
                 <div className='item__image'>
-                  <img src={logo} alt="log" />
+                  <img src={itemData?.product_image ? itemData.product_image : logo } alt="log" />
                 </div>
                 <div style={{
                   display: 'flex',

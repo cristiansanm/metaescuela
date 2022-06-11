@@ -12,19 +12,32 @@ import add from "../../assets/img/Icons/add_product.png"
 import { subCategoriesArray } from "../../assets/js/formaters"
 import ProductController from "../../assets/controllers/ProductsController"
 import SnackMessages from "../CommonUiComponents/SnackMessages"
-import { LaptopWindows, Refresh } from '@material-ui/icons';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+
+} from "firebase/storage";
+import { storage } from "../../firebase/firebasedb";
+
+
 export default function AddProductButton() {
+  //Conexion con base de datos (FIREBASE) y funcion subida de archivo
+
+  //
+  const [imageUpload, setImageUpload] = useState(null);
+
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [subCategory, setSubCategory] = useState('');
-  const [image, setImage] = useState('');
   const [uploadImg, setUploadImg] = useState('');
   // Variables para el SnackMessages 
   const [openSnack, setOpenSnack] = useState(false);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
+  const [urlImage,setUrlImage] = useState("");
   const handleCloseSnack = () => {
     setOpenSnack(false);
   }
@@ -35,12 +48,16 @@ export default function AddProductButton() {
     setOpen(true);
   };
   const handleUploadImg = (e) => {
+    setImageUpload(e.target.files[0]);
     let img = URL.createObjectURL(e.target.files[0]);
     setUploadImg(img)
+
   }
   const handleClose = () => {
     setOpen(false);
   };
+  
+ 
   const sendData = async() => {
     try{
       let payload = {
@@ -51,20 +68,49 @@ export default function AddProductButton() {
         product_availability: true,
         seller_id_fk: 1,
         product_stock: 1,
-        product_image: image
+        product_image: ""
       }
-      await ProductController.createProduct(payload);
+     
+      if (imageUpload == null) {
+        handleClose()
+        setOpenSnack(true)
+        setMessage("La imagen no se ha encontrado")
+        setType("error")
+        return
+      };
+      const imageRef = ref(storage, `Productos/${imageUpload.name}`);
+      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          payload.product_image=url
+
+      ProductController.createProduct(payload)
+      .then( res =>{
+
         setOpenSnack(true);
         setMessage("Producto creado correctamente.")
         setType("success")
         setTimeout( () => {
-          handleClose()
-          window.location.reload()
-        },2000)
+        handleClose()
+          //window.location.reload()
+        },2000) 
+
+      } )
+      
+        });
+      }) 
+      
+        
+    
+    //OBTENIENDO LA IMAGEN
+   
+   
+ 
     }catch(e){
-      console.log(e)
-    }
+      setOpenSnack(true);
+      setMessage(e);
+      setType("error");    }
   }
+
   return (
     <div className="add__button__container">
         <IconButton 
