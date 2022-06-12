@@ -32,7 +32,7 @@ const ProductView = () => {
         }
     }
     let category = product?.subcategory_id_fk >= 10 ? "Tecnología" : "Libros"
-  return (
+return (
     <div className="single__product__container">
         <Grid sx={{mb: 3}} container>
             <Grid item xs={6}>
