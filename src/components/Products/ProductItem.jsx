@@ -3,8 +3,7 @@ import "../../assets/scss/Products/ProductItem.scss"
 import { fkSubcateory } from '../../assets/js/formaters'
 import logo from '../../assets/img/Login/Logo_MetaEscuela.png'
 import { useNavigate } from 'react-router-dom'
-const verifyCharacter = (character) => 
-  character.includes("_") ? true : false 
+
 const ProductItem = ({itemData}) => {
   const navigate = useNavigate()
   return (
@@ -32,7 +31,12 @@ const ProductItem = ({itemData}) => {
                 </div>
                 <hr className='item__divider'/>
                 <div className='item__image'>
-                  <img src={itemData?.product_image ? itemData.product_image : logo } alt="log" />
+                  <img 
+                    src={itemData?.product_image ? itemData.product_image : logo } 
+                    alt="log" 
+                    width="120"
+                    style={{objectFit: "cover"}}
+                  />
                 </div>
                 <div style={{
                   display: 'flex',
@@ -53,15 +57,15 @@ const ProductItem = ({itemData}) => {
                 <hr className='item__divider'/>
                 <div className='item__info'>
                   <div>
-                    <b>Vendedor:</b> {itemData?.product_seller}
+                    <b>Vendedor:</b> {itemData?.User?.user_name}
                   </div>
                   <div>
-                    <b>Precio:</b> {itemData?.product_price}
+                    <b>Precio:</b> {itemData?.product_price} €
                   </div>
                 </div>
                 <div className='item__button'>
                   <button
-                    onClick={() => navigate('/products/1')}
+                    onClick={() => navigate(`/products/${itemData?.id}`)}
                   >Ver detalle</button>
                 </div>
             </div>

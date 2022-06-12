@@ -1,16 +1,28 @@
-import {  useState } from 'react'
+import {  useEffect, useState } from 'react'
 import { Grid, IconButton } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom'
 import logo from "../../assets/img/Login/Logo_MetaEscuela.png"
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useParams } from 'react-router-dom';
+import ProductsController from '../../assets/controllers/ProductsController';
 import "../../assets/scss/ProductView/ProductView.scss"
-const ProductView = (product) => {
+import { fkSubcateory } from '../../assets/js/formaters';
+
+const ProductView = () => {
+    const [product, setProduct] = useState({});
+    const idProduct = useParams();
+    // console.log(idProduct)
+    useEffect(()=>{
+        ProductsController.getProductById(idProduct.id)
+        .then(product => setProduct(product.data))
+        .catch(err => console.log(err))
+    },[])
     const navigate = useNavigate()
     const [quantity, setQuantity] = useState(1)
     const handleQuantityAdd = () => {
-        if (quantity < 10) {
+        if (quantity < product?.product_stock) {
             setQuantity(quantity + 1)
         }
     }
@@ -19,6 +31,7 @@ const ProductView = (product) => {
             setQuantity(quantity - 1)
         }
     }
+    let category = product?.subcategory_id_fk >= 10 ? "Tecnología" : "Libros"
   return (
     <div className="single__product__container">
         <Grid sx={{mb: 3}} container>
@@ -38,11 +51,16 @@ const ProductView = (product) => {
                 <div className="single__product__header">
                     <div className="first__data">
                         <span>Vendido por:</span>
-                        <span>{product?.seller ? product?.seller.user_name : "usuario"}</span>
+                        <span>
+                            {product?.User 
+                            ? 
+                            `${product?.User?.user_name} ${product?.User?.user_lastname}`  
+                            : "usuario"}
+                            </span>
                     </div>
                     <div className="second__data">
                         <span>Cantidad:</span>
-                        <span>{product?.stock ? product?.quantity : "0"}</span>
+                        <span>{product?.product_stock ? product?.product_stock : "0"}</span>
                     </div>
                 </div>
                 
@@ -52,11 +70,11 @@ const ProductView = (product) => {
             <Grid item xs={6}>
                 <div className="single__product__body">
                     <div className="single__product__tittle">
-                        <h3>{product?.produc_name ? product.produc_name : "Título"}</h3>
+                        <h3>{product?.product_name ? product.product_name : "Título"}</h3>
                     </div>
                     <div className="single__product__description">
                         <p>
-                            {product?.product_name ? product?.product_name : 
+                            {product?.product_description ? product?.product_description : 
                                 `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 Quidem ex perferendis adipisci quaerat reiciendis maiores in libero 
                                 blanditiis aperiam error amet, facilis delectus aspernatur, 
@@ -76,8 +94,13 @@ const ProductView = (product) => {
                         />
                     </div>
                     <div className="single__product__info">
-                        <span>{product?.product_subcategory ? 
-                            product?.product_subcategory : "Libro, 1º ESO"}</span>
+                        <span>
+                            {product?.subcategory_id_fk 
+                            ? 
+                            `${category}, ${fkSubcateory[product?.subcategory_id_fk]}`
+                            : 
+                            "Libro, 1º ESO"}
+                        </span>
                         <span>
                             {product?.product_price ? 
                                 product?.product_price : "0"} €

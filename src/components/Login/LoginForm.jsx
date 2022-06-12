@@ -44,7 +44,7 @@ const LoginForm = () => {
         setOpen(true);
       }
     }catch(error){
-      setMessage(error);
+      setMessage("Usario o contraseña incorrectos");
       setType('error');
       setOpen(true);
     }

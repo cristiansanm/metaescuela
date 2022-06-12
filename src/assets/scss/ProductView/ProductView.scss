@@ -13,8 +13,8 @@
     color: #283845;
     .first__data {
         display:flex;
-        justify-content: space-between;
-        width: 200px;
+        justify-content: center;
+        gap: 10px;
         padding: 1% 2%;
         background-color: #FBEEC2;
         border-radius: 5px;
@@ -24,8 +24,8 @@
     }
     .second__data{
         display:flex;
-        justify-content: space-between;
-        width: 200px;
+        justify-content: center;
+        gap: 10px;
         padding: 1% 2%;
         background-color: #EAF4F4;
         border-radius: 5px;

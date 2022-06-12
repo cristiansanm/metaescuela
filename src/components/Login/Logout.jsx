@@ -7,7 +7,7 @@ const Logout = () => {
     const logOutFunction = () => {
         localStorage.setItem('user', "")
         localStorage.setItem('id', "")
-        navigate('/login')
+        navigate('/')
     }
     return (
         <>

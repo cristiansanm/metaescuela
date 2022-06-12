@@ -3,31 +3,54 @@ import {  useState, useEffect } from 'react'
 import ProductsFilter from './ProductsFilter'
 import ProductsList from './ProductsList'
 import ProductsController from '../../assets/controllers/ProductsController'
-import { data } from "../../assets/js/mockupData.js"
 import { productsContainer } from '../../assets/js/styleObject/Products/ProductsContainer' 
 import { productFilters, productsFilterMobile } from '../../assets/js/styleObject/Products/ProducFilters'
 import Footer from '../CommonUiComponents/Miguel/Footer'
 import ProductsFilterMobile from './ProductsFilterMobile'
+import SnackMessages from '../CommonUiComponents/SnackMessages'
 
 
 const Products =  () => {
+  const[open, setOpen]= useState(false);
+  const[message, setMessage]= useState("")
+  const[type, setType]= useState("")
+  const handleClose = () => setOpen(false);
   const [itemListData, setItemListData] = useState([])
+  const [filters, setFilters] = useState({})
+  const handleFilters = (payload) => {
+    setFilters(payload);
+    console.log(payload)
+  }
   const userId = localStorage.getItem('id')
-  console.log(localStorage.getItem('id'))
-  console.log(localStorage.getItem('user'))
   useEffect(() => {
-    ProductsController.getProducts({userId})
+    if(Object.keys(filters).length > 0){
+      let payload= {
+        filters,
+        id: {
+          userId
+        }
+      }
+      ProductsController.getProductsByFilter(payload)
+      .then(products => {let { data } = products; setItemListData(data)})
+      .catch(err => {
+        setMessage("No se ha encontrado la consulta requerida")
+        setType("error")
+        setOpen(true)
+      })
+    }else{
+      ProductsController.getProducts({userId})
     .then(products => {
       let { data } = products;
       setItemListData(data)
     }).catch(err => {
       console.log(err)
     })
-  },[])
+    }
+  },[filters])
   return (
     <Grid container>
       <Grid sx={productFilters} item lg={3}>
-        <ProductsFilter/>
+        <ProductsFilter setFiltersFunc={handleFilters}/>
       </Grid>
       <Grid sx={productsFilterMobile} item xs={12}>
         <ProductsFilterMobile/>
@@ -38,6 +61,12 @@ const Products =  () => {
       <Grid item xs={12}>
         <Footer/>
       </Grid>
+      <SnackMessages
+        open={open}
+        handleClose={handleClose}
+        message={message}
+        type={type}
+      />
     </Grid>
   )
 }

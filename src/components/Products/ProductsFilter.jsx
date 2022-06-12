@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import SearchIcon from '@mui/icons-material/Search';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import "../../assets/scss/Products/ProductFilters.scss";
+
 import { 
   checkboxContainer, 
   accordionBase, 
@@ -18,7 +19,8 @@ import {
   filterDeleteButton
 } from '../../assets/js/styleObject/Products/ProducFilters';
 import { Button, FormControl, Radio, RadioGroup, Tooltip } from '@mui/material';
-const ProductsFilter = () => {
+import { subCategoryNumber } from '../../assets/js/formaters';
+const ProductsFilter = ({setFiltersFunc}) => {
   const [category, setCategory] = useState("libros");
   const [education, setEducation] = useState("");
   const [grade, setGrade] = useState("");
@@ -40,6 +42,20 @@ const ProductsFilter = () => {
   }
   const handlePrice = (e) => {
     setPrice(e.target.value);
+  }
+  const sendFilters = async() => {
+    try {
+      let prices = price.split(",");
+      let subcategory = subCategoryNumber[education+grade] || 1;
+      const filters = {
+        subcategory,
+        min: prices[0],
+        max:  prices[1]
+      }
+      setFiltersFunc(filters)
+    }catch(error){
+      console.log(error);
+    }
   }
   return (
     <div>
@@ -74,17 +90,17 @@ const ProductsFilter = () => {
                   sx={checkboxLabel}
                 >
                   <FormControlLabel 
-                    value="eso_" 
+                    value="eso" 
                     control={<Radio />} 
                     label="ESO" 
                   />
                   <FormControlLabel 
-                    value="bachillerato_" 
+                    value="bachillerato" 
                     control={<Radio />} 
                     label="Bachillerato" 
                   />
                   <FormControlLabel 
-                    value="fp_" 
+                    value="fp" 
                     control={<Radio />} 
                     label="FP" 
                   />
@@ -102,7 +118,7 @@ const ProductsFilter = () => {
                   <FormControlLabel 
                     value="mobiles" 
                     control={<Radio />} 
-                    label="Mobibles" 
+                    label="Móviles" 
                   />
                   <FormControlLabel 
                     value="portatiles" 
@@ -136,7 +152,7 @@ const ProductsFilter = () => {
           </AccordionSummary>
           <AccordionDetails sx={accordionContent}>
             {/* Setting grade */}
-            {education === "fp_" ? (
+            {education === "fp" ? (
               <FormControl sx={checkboxContainer}>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
@@ -146,17 +162,17 @@ const ProductsFilter = () => {
                   sx={checkboxLabel}
                 >
                   <FormControlLabel 
-                    value="basica" 
+                    value="_basica" 
                     control={<Radio />} 
                     label="Basica" 
                   />
                   <FormControlLabel 
-                    value="media" 
+                    value="_media" 
                     control={<Radio />} 
                     label="Media" 
                   />
                   <FormControlLabel 
-                    value="superior" 
+                    value="_superior" 
                     control={<Radio />} 
                     label="Superior" 
                   />
@@ -173,25 +189,25 @@ const ProductsFilter = () => {
                   sx={checkboxLabel}
                 >
                   <FormControlLabel 
-                    value="primero" 
+                    value="_primero" 
                     control={<Radio />} 
                     label="1º" 
                   />
                   <FormControlLabel 
-                    value="segundo" 
+                    value="_segundo" 
                     control={<Radio />} 
                     label="2º" 
                   />
                   <FormControlLabel
-                    sx={education !== "eso_" && {display: "none"}}
-                    disabled={education === "eso_" ?  false : true} 
-                    value="tercero" 
+                    sx={education !== "eso" && {display: "none"}}
+                    disabled={education === "eso" ?  false : true} 
+                    value="_tercero" 
                     control={<Radio />} 
                     label="3º" 
                   />
                   <FormControlLabel 
-                    sx={education !== "eso_" && {display: "none"}}
-                    disabled={education === "eso_" ?  false : true} 
+                    sx={education !== "eso" && {display: "none"}}
+                    disabled={education === "eso" ?  false : true} 
                     value="cuarto" 
                     control={<Radio />} 
                     label="4º" 
@@ -222,22 +238,22 @@ const ProductsFilter = () => {
               sx={checkboxLabel}
             >
               <FormControlLabel 
-                value="1" 
+                value="1,5" 
                 control={<Radio />} 
                 label="1€ a 5€" 
               />
               <FormControlLabel 
-                value="26" 
+                value="26,50" 
                 control={<Radio />} 
                 label="26€ a 50€" 
               />
               <FormControlLabel 
-                value="51" 
+                value="51,100" 
                 control={<Radio />} 
                 label="51€ a 100€" 
               />
               <FormControlLabel 
-                value="101" 
+                value="101,5000" 
                 control={<Radio />} 
                 label="101€ a más" 
               />
@@ -249,16 +265,7 @@ const ProductsFilter = () => {
         <Tooltip title="Buscarfiltros">
           <Button
             sx={filterSearchButton}
-            onClick={() => {
-              if(category === "libros") {
-                console.log(
-                  `SELECT * FROM products as p WHERE p.category = ${category}  AND p.subcategory = ${education}${grade} AND p.price = ${price}`);
-              }else{
-                console.log(
-                `SELECT * FROM products as p WHERE p.category = ${category}  AND p.subcategory = ${education} AND p.price = ${price}`);
-              }
-              
-            }}
+            onClick={sendFilters}
           >
             Buscar filtros<SearchIcon />
           </Button>
@@ -270,6 +277,7 @@ const ProductsFilter = () => {
               setEducation("");
               setGrade("");
               setPrice("");
+              setFiltersFunc({})
               console.log("Filters cleared!")
             }}
           >

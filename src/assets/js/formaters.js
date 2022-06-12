@@ -45,3 +45,18 @@ export const fkSubcateory = {
     "12": "Tabletas",
     "13": "Accesorios",
 }
+export const subCategoryNumber = {
+    "eso_primero": 1,
+    "eso_segundo": 2,
+    "eso_tercero": 3,
+    "eso_cuarto": 4,
+    "bachillerato_primero": 5,
+    "bachillerato_segundo": 6,
+    "fp_basica": 7,
+    "fp_media": 8,
+    "fp_superior": 9,
+    "mobiles": 10,
+    "portatiles": 11,
+    "tabletas": 12,
+    "accesorios": 13,
+}

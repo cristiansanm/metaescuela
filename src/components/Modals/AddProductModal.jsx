@@ -37,7 +37,6 @@ export default function AddProductButton() {
   const [openSnack, setOpenSnack] = useState(false);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
-  const [urlImage,setUrlImage] = useState("");
   const handleCloseSnack = () => {
     setOpenSnack(false);
   }
@@ -59,6 +58,7 @@ export default function AddProductButton() {
   
  
   const sendData = async() => {
+    let userId = localStorage.getItem('id')
     try{
       let payload = {
         product_name: name,
@@ -66,7 +66,7 @@ export default function AddProductButton() {
         product_price: price,
         subcategory_id_fk: subCategory,
         product_availability: true,
-        seller_id_fk: 1,
+        seller_id_fk: userId || 2,
         product_stock: 1,
         product_image: ""
       }
@@ -83,19 +83,26 @@ export default function AddProductButton() {
         getDownloadURL(snapshot.ref).then((url) => {
           payload.product_image=url
 
-      ProductController.createProduct(payload)
-      .then( res =>{
-
-        setOpenSnack(true);
-        setMessage("Producto creado correctamente.")
-        setType("success")
-        setTimeout( () => {
-        handleClose()
-          //window.location.reload()
-        },2000) 
-
-      } )
-      
+        ProductController.createProduct(payload)
+        .then( res =>{
+          handleClose()
+          setOpenSnack(true);
+          setMessage("Producto creado correctamente.")
+          setType("success")
+          setName("");
+          setDescription("");
+          setPrice("");
+          setSubCategory("");
+          setUploadImg("");
+          setImageUpload(null);
+          }).catch(err => {
+            handleClose()
+            setOpenSnack(true)
+            setMessage("Error al subir el producto")
+            setType("error")
+            console.log(err)
+          })
+        
         });
       }) 
       

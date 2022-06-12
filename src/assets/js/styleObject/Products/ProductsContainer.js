@@ -5,5 +5,7 @@ export const productsContainer = {
     justifyContent: 'center',
     alignItems: 'center',
     gap: '20px',
-    padding: "20px 0 0 20px"
+    padding: "20px 0 0 20px",
+    overflowY: 'scroll',
+    height: 'calc(98vh - 60px)',
 }
