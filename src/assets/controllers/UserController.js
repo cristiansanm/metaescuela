@@ -62,6 +62,20 @@ class UserController {
         }catch(error){
             throw error;
         }
-    }}
+    
+    }
+    static async getMiniInfo(payload){
+        try{
+            const response = await db.post(
+                `/user/getMiniInfo`,
+                payload
+            )
+            return response
+        }catch(error){
+            throw error;
+        }
+    }
+}
+    
 
 export default UserController;

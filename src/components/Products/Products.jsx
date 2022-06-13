@@ -8,7 +8,7 @@ import { productFilters, productsFilterMobile } from '../../assets/js/styleObjec
 import Footer from '../CommonUiComponents/Miguel/Footer'
 import ProductsFilterMobile from './ProductsFilterMobile'
 import SnackMessages from '../CommonUiComponents/SnackMessages'
-
+import useAuth from '../../customHooks/useAuth'
 
 const Products =  () => {
   const[open, setOpen]= useState(false);
@@ -16,36 +16,30 @@ const Products =  () => {
   const[type, setType]= useState("")
   const handleClose = () => setOpen(false);
   const [itemListData, setItemListData] = useState([])
-  const [filters, setFilters] = useState({})
+  const [filters, setFilters] = useState({});
+  const { auth } = useAuth();
+  
   const handleFilters = (payload) => {
     setFilters(payload);
-    console.log(payload)
   }
-  const userId = localStorage.getItem('id')
   useEffect(() => {
-    if(Object.keys(filters).length > 0){
-      let payload= {
-        filters,
-        id: {
-          userId
-        }
-      }
-      ProductsController.getProductsByFilter(payload)
+    (Object.keys(filters).length > 0) ? 
+      ProductsController.getProductsByFilter({filters, id: {userId: auth?.user_id}})
       .then(products => {let { data } = products; setItemListData(data)})
       .catch(err => {
         setMessage("No se ha encontrado la consulta requerida")
         setType("error")
         setOpen(true)
       })
-    }else{
-      ProductsController.getProducts({userId})
-    .then(products => {
-      let { data } = products;
-      setItemListData(data)
-    }).catch(err => {
-      console.log(err)
-    })
-    }
+     : 
+        ProductsController.getProducts({userId: auth?.user_id})
+        .then(products => {
+          let { data } = products;
+          setItemListData(data)
+        }).catch(err => {
+          console.log(err)
+        })
+    
   },[filters])
   return (
     <Grid container>

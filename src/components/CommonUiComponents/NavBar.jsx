@@ -2,7 +2,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import icon from "../../assets/img/NavBar/icon.png"
 import '../../assets/scss/appbar/Navbar.scss'
 import * as NavBarStyles from '../../assets/js/styleObject/CommonUI/NavBar.js'
@@ -93,6 +93,9 @@ export default function NavBar() {
           </Grid>
         </Toolbar>
       </AppBar>
+      <section>
+        <Outlet/>
+      </section>
     </Box >
   );
 }

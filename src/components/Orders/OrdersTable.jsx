@@ -10,6 +10,9 @@ import Paper from '@mui/material/Paper';
 import { IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import eye from "../../assets/img/Icons/visibility.png";
+import moment from "moment";
+import "moment/locale/es";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#283845',
@@ -39,18 +42,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData( name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 const OrdersTable = ({ data, headers }) => {
   const navigate = useNavigate();
   return (
@@ -71,17 +62,17 @@ const OrdersTable = ({ data, headers }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.name}>
+              {data?.map((order, index) => (
+                <StyledTableRow key={index}>
                   <StyledTableCell component="th" scope="row">
-                    {row.name}
+                    {order?.id}
                   </StyledTableCell>
-                  <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+                  <StyledTableCell align="right">{order?.Products?.length}</StyledTableCell>
+                  <StyledTableCell align="right">{order?.order_total}</StyledTableCell>
+                  <StyledTableCell align="right">{moment(order?.createdAt).format("L")}</StyledTableCell>
                   <StyledTableCell align="right">
                     <IconButton
-                      onClick={() => navigate('1')}
+                      onClick={() => navigate(`${order?.id}`)}
                     >
                       <img src={eye} alt="" width="32"/>
                     </IconButton>

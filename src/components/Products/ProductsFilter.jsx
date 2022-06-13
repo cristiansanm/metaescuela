@@ -238,9 +238,9 @@ const ProductsFilter = ({setFiltersFunc}) => {
               sx={checkboxLabel}
             >
               <FormControlLabel 
-                value="1,5" 
+                value="1,25" 
                 control={<Radio />} 
-                label="1€ a 5€" 
+                label="1€ a 25€" 
               />
               <FormControlLabel 
                 value="26,50" 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import logo from "../../../assets/img/Login/Logo_MetaEscuela.png"
+import UserInfoModal from '../../Modals/UserInfoModal';
+import { IconButton } from '@mui/material';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#283845',
@@ -20,7 +22,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 16,
     fontFamily: 'Poppins, sans-serif',
-    padding: '20px 15px',
+    padding: '30px 15px',
     color: '#283845',
     fontWeight: '500'
   },
@@ -37,22 +39,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData( name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 const TableSingleOrder = ({ data, headers }) => {
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const [id, setId] = useState("");
   return (
     <>
-        <TableContainer sx={{height: "450px",}} component={Paper}>
+        <TableContainer sx={{maxHeight: "400px",}} component={Paper}>
           <Table sx={{ minWidth: 700,  overflowY: "scroll"}} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -68,26 +61,45 @@ const TableSingleOrder = ({ data, headers }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.name}>
+              {data?.Products?.map((product, index) => (
+                <StyledTableRow key={index}>
                   <StyledTableCell component="th" scope="row">
                     <img 
-                        src={row?.product_image ? row.product_image : logo} 
+                        src={product?.product_image ? product.product_image : logo} 
                         alt="img" 
                         width="32"
                     />
                   </StyledTableCell>
-                  <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                  <StyledTableCell align="right">{row.name}</StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                  <StyledTableCell align="right">{row.fat}</StyledTableCell>
+                  <StyledTableCell align="right">{product?.id}</StyledTableCell>
+                  <StyledTableCell align="right">
+                      {product?.product_name}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{product?.OrdersProducts?.product_quantity}</StyledTableCell>
+                  <StyledTableCell align="right">{product?.product_price}</StyledTableCell>
+                  <StyledTableCell align="right">{product?.OrdersProducts?.product_subtotal}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    <IconButton
+                      sx={{ 
+                        color: "#283845", 
+                        fontSize: 16,
+                        fontWeight: "500",
+                        textDecoration: "underline",
+                      }}
+                      onClick={() => {
+                        setId(product?.User?.id);
+                        setOpen(true);
+                      }}
+                    >
+                      {product?.User?.user_name}
+                    </IconButton>
+                    
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+        <UserInfoModal open={open} handleClose={handleClose} type={"Vendedor"} id={id}/>
     </>
     
   )

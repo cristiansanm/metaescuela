@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const Logout = () => {
     const navigate = useNavigate();
     const logOutFunction = () => {
-        localStorage.setItem('user', "")
-        localStorage.setItem('id', "")
-        navigate('/')
+        localStorage.setItem('user_id', "")
+        localStorage.setItem('user_roles', "")
+        localStorage.setItem('user_token', "")
+        localStorage.setItem('user_name', "")
+        navigate('/login')
     }
     return (
         <>

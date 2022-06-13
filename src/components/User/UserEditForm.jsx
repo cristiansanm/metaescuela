@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import SnackMessages from '../CommonUiComponents/SnackMessages';
 import { gradesArray } from '../../assets/js/formaters';
 import UserController from '../../assets/controllers/UserController';
-
+import useAuth from '../../customHooks/useAuth'
 const UserEditForm = () => {
     const {
         register,
@@ -16,7 +16,7 @@ const UserEditForm = () => {
     const [message, setMessage] = useState('');
     const [type, setType] = useState('');
     const handleClose = () => setOpen(false);
-    
+    const { auth } = useAuth();
     const [grade, setGrade] = useState("")
     const [name, setName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -31,7 +31,7 @@ const UserEditForm = () => {
             user_grade:grade,
             user_email:email,
             user_phone:phone,
-            userId:17
+            userId:auth?.user_id
         }
         UserController.editUser(payload)
         .then(res => {
@@ -48,7 +48,7 @@ const UserEditForm = () => {
 
     useEffect(() => {
         
-        UserController.getOneUser({userId:17})
+        UserController.getOneUser({userId:auth?.user_id})
         .then(_user => {
             console.log(_user)
             let {data} = _user

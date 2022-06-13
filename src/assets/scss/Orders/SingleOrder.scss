@@ -1,3 +1,47 @@
 .single__order__container{
     background-color: #EAF4F4;
 }
+.single__order__title{
+    display:flex;
+    margin-top:20px;
+    margin-bottom: 10px;
+    align-items:center;
+    justify-content:flex-start;
+    gap: 10px;
+}
+.single__product__total{
+    display:flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+    border: 1px solid #283845;
+    background-color: #E5FDFF;
+    width: 40%;
+    float: right;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-top: 2%;
+    font-size: 20px
+}
+.button__products__send{
+    height: 40px;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 10px;
+    border-radius: 8px;
+    border: 1px solid #283845;
+    background-color: #75DDD8;
+    color: #F4FBFA;
+    font-family: "Poppins", serif;
+    &:hover{
+        background: #16C9C0;
+        color: #F4FBFA;
+        border: 1px solid #283845;
+        box-sizing: border-box;
+        border-radius: 9px;
+        cursor: pointer;
+    }
+    &:active{
+        transform: translateY(2px);
+        background-color: #75DDD8;
+    }
+}

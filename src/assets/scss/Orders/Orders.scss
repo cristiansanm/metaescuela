@@ -7,7 +7,7 @@
     border-radius: 9px;
     border: 1px solid #283845;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 18px;
     cursor: pointer;
     &:hover{
         background-color: #27aea8;
@@ -17,5 +17,28 @@
         background-color: #1c716d;
         color: #F4FBFA;
         transform: translateY(2px);
+    }
+}
+.empty__title{
+    font-size: 38px;
+    color: #283845;
+    display:flex;
+    font-weight: 600;
+    justify-content: center;
+    gap: 20px
+}
+.empty__buttons{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    span{
+        margin-right: 10px;
+        color: #283845;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .empty__divider{
+        color: #DAE6E5;
+        border-right: 2px solid #283845;
     }
 }

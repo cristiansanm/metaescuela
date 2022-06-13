@@ -1,19 +1,24 @@
-// import { TextField } from '@mui/material'
+
 import '../../assets/scss/login/loginForm.scss'
 import { useState } from 'react'
-import {useNavigate} from 'react-router-dom';
+import useAuth from '../../customHooks/useAuth';
 import { TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import UserController from '../../assets/controllers/UserController';
 import SnackMessages from '../CommonUiComponents/SnackMessages';
+import { Link, useNavigate, useLocation } from "react-router-dom"
 const LoginForm = () => {
+  const { setAuth } = useAuth();
   //Varaibles para el mensaje de alerta
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [type, setType] = useState('');
   const handleClose = () => setOpen(false);
 
+  //Variables para el formulario
   const navigate =  useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const {
@@ -30,13 +35,22 @@ const LoginForm = () => {
       }
       let { data } = await UserController.loginUser(payload);
       if(data.user){
-        localStorage.setItem('user', JSON.stringify(data.token));
-        localStorage.setItem('id', data.user.id)
+        let userData = {
+          user_name : data.user.user_name,
+          user_id: data.user.id,
+          user_roles: data.user.user_roles,
+          user_token: data.token
+        }
+        localStorage.setItem('user_name', JSON.stringify(userData.user_name));
+        localStorage.setItem('user_token', JSON.stringify(userData.user_token));
+        localStorage.setItem('user_id', userData.user_id)
+        localStorage.setItem('user_roles', JSON.stringify(userData.user_roles));
+        setAuth(userData)
         setMessage('Bienvenid@ ' + data.user.user_name);
         setType('success');
         setOpen(true);
         setTimeout(() => {
-          navigate('/products')
+          navigate(from, { replace: true });
         }, 1000)
       }else{
         setMessage(data.message);
@@ -44,6 +58,7 @@ const LoginForm = () => {
         setOpen(true);
       }
     }catch(error){
+
       setMessage("Usario o contraseña incorrectos");
       setType('error');
       setOpen(true);

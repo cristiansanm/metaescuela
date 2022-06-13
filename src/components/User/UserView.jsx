@@ -5,9 +5,8 @@ import userIcon from "../../assets/img/Icons/user.png"
 import logo from "../../assets/img/Login/Logo_MetaEscuela.png"
 import UserController from "../../assets/controllers/UserController"
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
 import Avatar from '../../assets/img/Icons/avatar.png'
+import useAuth from '../../customHooks/useAuth'
 import {
     ref,
     uploadBytes,
@@ -20,25 +19,21 @@ import UserEditForm from './UserEditForm'
 
 const UserView = () => {
     const [user, setUser] = useState({});
-    const idUser = useParams();
     const [uploadImg, setUploadImg] = useState('');
     const [imageUpload, setImageUpload] = useState(null);
-    const [payloadUser, setPayloadUser] = useState({
-        user_name: "",
-        user_lastname: "",
-        user_grade: "",
-        user_phone: "",
-        user_is_buyer: "",
-        user_is_seller: ""
-
-    })
-    console.log(payloadUser)
+    const { auth } = useAuth();
     // console.log(iduser)
     useEffect(() => {
-        UserController.getOneUser({ userId: 17 })
-
-            .then(user => setUser(user.data.user))
+        let isMounted = true;
+        const controller = new AbortController();
+        UserController.getOneUser({ userId: auth?.user_id })
+            .then(user => isMounted && setUser(user.data.user))
             .catch(err => console.log(err))
+        
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
     }, [])
 
     const handleUploadImg = (e) => {
@@ -54,7 +49,7 @@ const UserView = () => {
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
                 let payload = {
-                    userId: 17,
+                    userId: auth?.user_id,
                     img: url
                 }
                 UserController.addProfilePhoto(payload)
@@ -62,7 +57,7 @@ const UserView = () => {
                         console.log(res)
                         setImageUpload(null)
                         setUploadImg(null)
-
+                        window.location.reload()
                     })
                     .catch(error => console.log(error))
 
@@ -72,20 +67,13 @@ const UserView = () => {
 
     const deletePhoto = async () => {
         await UserController.deleteProfilePhoto({
-            userId: 17
+            userId: auth?.user_id
         })
-            .then(res => console.log(res))
+            .then(res => {console.log(res); window.location.reload()})
             .catch(error => console.log(error))
     }
     ///////////////// editar usuario
-    const [editUser, setEditUser] = useState(false) 
-     /*  const editUser = async () => {
-         await UserController.editUser({
-             userId:17,
-             
-         })
-     } */
-    ////////////////
+    const [editUser, setEditUser] = useState(false)
 
     return (
         <div className="single__product__container">
@@ -189,7 +177,7 @@ const UserView = () => {
                                     <span>
                                         Roles
                                     </span>
-                                    <span id="separa"> {user?.user_is_buyer === true ? "Comprador" : ""}{user?.user_is_seller === true ? "Comprador" : ""} </span>
+                                    <span id="separa"> {user?.user_is_buyer === true ? "Comprador" : ""}{user?.user_is_seller === true ? "Vendedor" : ""} </span>
                                 </div>
                                 <div id='botyspan'>
 
@@ -199,7 +187,7 @@ const UserView = () => {
                             </>
 
                         )
-                                
+
                     }
 
                 </Grid>
