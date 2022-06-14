@@ -46,7 +46,7 @@ const OrdersTable = ({ data, headers }) => {
   const navigate = useNavigate();
   return (
     <>
-        <TableContainer sx={{height: "450px",}} component={Paper}>
+        <TableContainer sx={{maxHeight: "450px",}} component={Paper}>
           <Table sx={{ minWidth: 700,  overflowY: "scroll"}} aria-label="customized table">
             <TableHead>
               <TableRow>

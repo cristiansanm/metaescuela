@@ -36,6 +36,14 @@ class ProdctsController {
             throw error
         }
     }
+    static async editProduct(payload){
+        try{
+            const response = await db.post("/product/editProduct", payload)
+            return response;
+        }catch(error){
+            throw error
+        }
+    }
     
 }
 

@@ -88,13 +88,48 @@
         border-radius: 8px;
         height: 40px;
         font-family: "Poppins", serif;
+        cursor: pointer;
+        &:disabled{
+            background-color: #bfd0dd;
+            color: #F4FBFA;
+            cursor:not-allowed;
+        }
     }
     .button__add{
         background-color: #4399A5;
         border: 1px solid #283845;
+        &:hover{
+            background-color: #27aea8;
+            color: #F4FBFA;
+        }
+        &:active{
+            background-color: #1c716d;
+            color: #F4FBFA;
+            transform: translateY(2px);
+        }
+        &:disabled{
+            background-color: #bfd0dd;
+            color: #F4FBFA;
+            cursor:not-allowed;
+        }
+        
     }
     .button__buy{
         background-color: #75DDD8;
         border: 1px solid #283845;
+        &:hover{
+            background-color: #44aea9;
+            color: #F4FBFA;
+        }
+        &:active{
+            background-color: #11736e;
+            color: #F4FBFA;
+            transform: translateY(2px);
+        }
+        &:disabled{
+            background-color: #bfd0dd;
+            color: #F4FBFA;
+            cursor:not-allowed;
+        }
     }
 }

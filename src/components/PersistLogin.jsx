@@ -4,7 +4,7 @@ import useAuth from "../customHooks/useAuth"
 import LoadingLogo from "./Modals/LoadingLogo"
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true)
-    const { auth, setAuth } = useAuth()
+    const { setAuth } = useAuth()
     const userData = {
         user_name:  localStorage.getItem("user_name") || "",
         user_id:  localStorage.getItem("user_id") || "",

@@ -1,0 +1,28 @@
+.no__photo__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    input{
+        display: none;
+    }
+}
+.underline__button__red{
+    border-bottom: 1px solid #ff0000;
+}
+.data__container{
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 18px;
+    background-color: #EAF4F4;
+    color: #283845;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 20px;
+    hr{
+        margin: 20px auto;
+        background-color: #CEDBDB;
+        border: 1px solid #CEDBDB;
+        width: 95%;
+    }
+}

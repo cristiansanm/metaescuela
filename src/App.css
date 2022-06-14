@@ -12,7 +12,6 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -22,45 +21,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-#userimagen{
-  padding: 10%;
-}
-#userdata{
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 0.5rem;
-  font-weight: bold;
-  
-}
-#editprofile{
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 0.5rem;
-  background-color: #EF6151;
-  color: white;
-  font-weight: bold;
-}
-
-#editprofile2{
-  border: 2px solid black;
-  border-radius: 10px;
-  padding: 0.5rem;
-  background-color: #75DDD8;
-  color: white;
-  font-weight: bold;
-}
-#botyspan{
-  display: flex;
-  justify-content: space-between;
-}
-#separa{
-  padding: 2%;
-  display: flex;
-  justify-content: space-between;
-}
-#lastspan{
-  color: #4399A5;
 }
 .App-link {
   color: #61dafb;

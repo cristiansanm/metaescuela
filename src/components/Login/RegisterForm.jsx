@@ -14,25 +14,21 @@ const RegisterForm = ({view}) => {
   const handleClose = () => setOpen(false);
   
   const [grade, setGrade] = useState("")
-  const [name, setName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [phone, setPhone] = useState("")
   const handleChangeGrade = (e) => setGrade(e.target.value)
   const {
     register,
     handleSubmit,
+    getValues,
+    setValue,
     formState: { errors },
   } = useForm();
   const sendDataForRegister = async () => {
     let payload = {
-      user_name: name,
-      user_lastname: lastName,
-      user_email: email,
-      user_password: password,
-      user_phone: phone,
+      user_name: getValues("name"),
+      user_lastname: getValues("lastName"),
+      user_email: getValues("email"),
+      user_password: getValues("password"),
+      user_phone: getValues("phone"),
       user_grade: grade,
       user_is_buyer: true,
       user_is_seller: false,
@@ -44,14 +40,14 @@ const RegisterForm = ({view}) => {
         setMessage(data.message);
         setType('success');
         setOpen(true);
-
-        setName("")
-        setLastName("")
-        setEmail("")
-        setPassword("")
-        setConfirmPassword("")
-        setPhone("")
-        setGrade("")
+        
+        setValue("name", "");
+        setValue("lastName", "");
+        setValue("email", "");
+        setValue("password", "");
+        setValue("confirmPassword", "");
+        setValue("phone", "");
+        setGrade("");
 
       }else{
         setOpen(true);
@@ -83,9 +79,7 @@ const RegisterForm = ({view}) => {
               error={errors.name ? true : false}
               helperText={errors.name ? errors.name.message : ""}
               sx={textFieldBg}
-              label="Nombre"
-              value={name}
-              onChange={(e) => setName(e.target.value)}          
+              label="Nombre"         
             />
             <TextField
               name="lastName"
@@ -102,9 +96,7 @@ const RegisterForm = ({view}) => {
               error={errors.lastName ? true : false}
               helperText={errors.lastName ? errors.lastName.message : ""}
               sx={textFieldBg}   
-              label="Apellido"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}    
+              label="Apellido"   
             />
           </div>
           <div className="shared__field">
@@ -122,14 +114,16 @@ const RegisterForm = ({view}) => {
                   message: "El teléfono debe ser un número",
                 },
                 minLength: {
+                  value: 8,
+                  message: "El teléfono debe tener 9 dígitos",
+                },
+                maxLength: {
                   value: 9,
                   message: "El teléfono debe tener 9 dígitos",
                 }
               })}
               error={errors.phone ? true : false}
-              helperText={errors.phone ? errors.phone.message : ""}
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}  
+              helperText={errors.phone ? errors.phone.message : ""} 
             />
               <FormControl fullWidth>
                 <InputLabel id="grade-select">Grado</InputLabel>
@@ -160,8 +154,6 @@ const RegisterForm = ({view}) => {
               helperText={errors.email ? errors.email.message : ""}
               sx={textFieldBg}
               label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               name='password'
@@ -179,8 +171,6 @@ const RegisterForm = ({view}) => {
               helperText={errors.password ? errors.password.message : ""}
               sx={textFieldBg} 
               label="Contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
             <TextField
               name='confirmPassword'
@@ -190,14 +180,12 @@ const RegisterForm = ({view}) => {
                   message: "Tienes que confirmar tu contraseña",
                 },
                 validate: value => 
-                  value === password || "Las contraseñas no coinciden"
+                  value === getValues("password")|| "Las contraseñas no coinciden"
               })}
               error={errors.confirmPassword ? true : false}
               helperText={errors.confirmPassword ? errors.confirmPassword.message : ""}
               sx={textFieldBg}
               label="Confirmar contraseña"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           <div style={{display:"flex", justifyContent: "center" }}>
             <button type="submit" 

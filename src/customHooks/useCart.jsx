@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import CartProvider from '../context/CartProvider'
+import CartContext from '../context/CartProvider'
 
 const useCart = () => {
-  return useContext(CartProvider)
+  return useContext(CartContext)
 }
 
 export default useCart

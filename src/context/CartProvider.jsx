@@ -1,29 +1,29 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState } from 'react';
 
-const cartContext = createContext([])
-export const useCartContext = () => useContext(cartContext);
+const CartContext = createContext([])
 
-const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }) => {
     const [cartList, setCartList] = useState([]);
 
     //Funtion for validate a existing element into the array
-    const isInCart = (id) => (cartList?.find(element => element.item.id === id)) ? true : false;
+    const isInCart = (id) => (cartList?.find(element => element.product.id === id)) ? true : false;
 
     //Function for add a item inside cart 
     function addToCart(item) {
-        if (isInCart(item.item.id)) {
+        if (isInCart(item.product.id)) {
             let newCartList = [...cartList];
 
             //Adds the aditional quantity to an existing item
             newCartList.map(element =>
 
-                (element.item.id === item.item.id) ? element.quantity += item.quantity : element.quantity
+                (element.product.id === item.product.id) ? element.product_quantity += item.product_quantity : element.product_quantity
 
             )
-
+            localStorage.setItem("cart", JSON.stringify(newCartList));
             setCartList([...newCartList]);
         }
         else {
+            localStorage.setItem("cart", JSON.stringify([...cartList, item]));
             setCartList([...cartList, item]);
         }
 
@@ -34,9 +34,11 @@ const CartProvider = ({ children }) => {
         let newCartList = [...cartList];
 
         //Returns a filtered array
-        let modifiedArray = newCartList.filter(element => element.item.id !== id);
+        let modifiedArray = newCartList.filter(element => element.product.id !== id);
 
+        
         setCartList(modifiedArray);
+        localStorage.setItem("cart", JSON.stringify(modifiedArray));
     }
 
     //Function for calculating the whole items into the cart
@@ -46,13 +48,14 @@ const CartProvider = ({ children }) => {
 
         //confirms if the array is fulled of items and starts to add
         if (cartList.length > 0) {
-            cartList.map(data => total += data.quantity)
+            cartList.map(data => total += data.product_quantity)
         }
         return total
     }
 
     //Empty the cart
     function emptyCart() {
+        localStorage.setItem("cart", "");
         setCartList([])
     }
 
@@ -64,23 +67,35 @@ const CartProvider = ({ children }) => {
     //Calculates the total amount of the order
     function calculateTotalPrice() {
         let total = 0;
-        cartList?.map((row) =>
-            total += row.item.price * row.quantity)
+        cartList?.forEach((row) =>
+            total += row.product.product_price * row.product_quantity)
         return total;
     }
+    //function for getting the id and the quantity
+    function getCartToBuy() {
+        let cartToBuy = [];
+        cartList?.forEach((row) =>
+            cartToBuy.push({
+                product_id: row.product.id,
+                product_quantity: row.product_quantity
+            }))
+        return cartToBuy;
+    }
     return (
-        <cartContext.Provider value={
+        <CartContext.Provider value={
             {
                 cartList,
+                setCartList,
                 addToCart,
                 emptyCart,
                 getTotalItemsOnCart,
                 removeItem,
                 calculateSubPrice,
-                calculateTotalPrice
+                calculateTotalPrice,
+                getCartToBuy
             }
         }>
             {children}
-        </cartContext.Provider>)
+        </CartContext.Provider>)
 }
-export default CartProvider;
+export default CartContext;

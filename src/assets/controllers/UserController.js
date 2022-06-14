@@ -6,7 +6,7 @@ class UserController {
             const response = await db.post("/user/loginUser", payload);
             return response;
         } catch (error){
-            throw error;
+            return error
         }
     }
     static async registerUser(payload){
@@ -68,6 +68,17 @@ class UserController {
         try{
             const response = await db.post(
                 `/user/getMiniInfo`,
+                payload
+            )
+            return response
+        }catch(error){
+            throw error;
+        }
+    }
+    static async convertToSeller(payload){
+        try{
+            const response = await db.post(
+                `/user/convertToSeller`,
                 payload
             )
             return response

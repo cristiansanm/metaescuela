@@ -11,11 +11,21 @@ import "../../assets/scss/ProductView/ProductView.scss"
 import { fkSubcateory } from '../../assets/js/formaters';
 import useAuth from '../../customHooks/useAuth';
 import LoadingLogo from '../Modals/LoadingLogo';
+import EditProductModal from '../Modals/EditProductModal';
+import useCart from '../../customHooks/useCart';
+import SnackMessages from '../CommonUiComponents/SnackMessages';
 const ProductView = () => {
+    const [openSnack, setOpenSnack] = useState(false);
+    const [snackMessage, setSnackMessage] = useState("");
+    const [snackType, setSnackType] = useState("");
+    const handleCloseSnack = () => setOpenSnack(false);
     const [product, setProduct] = useState({});
+    const [open, setOpen] = useState(false);
+    const handleClose = () => setOpen(false);
+    const [id, setId] = useState("");
     const { auth } = useAuth();
     const idProduct = useParams();
-    // console.log(idProduct)
+    const { addToCart } = useCart()
     useEffect(() => {
         ProductsController.getProductById(idProduct.id)
             .then(product => setProduct(product.data))
@@ -32,6 +42,16 @@ const ProductView = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1)
         }
+    }
+    const addToCartList = () => {
+        addToCart({product, product_quantity: quantity})
+        setSnackMessage("Producto agregado al carrito")
+        setSnackType("success")
+        setOpenSnack(true)
+    }
+    const buyNowFunc = () => {
+        addToCart({product, product_quantity: quantity})
+        navigate("/cart")
     }
     let category = product?.subcategory_id_fk >= 10 ? "Tecnología" : "Libros"
     return (
@@ -112,42 +132,87 @@ const ProductView = () => {
                             <div className="single__product__buttons">
                                 {(auth?.user_id == product?.seller_id_fk)
                                     ? (
-                                        <button className="button__style button__buy">Editar producto</button>
+                                        <button
+                                            className="button__style button__buy"
+                                            onClick={() => {
+                                                setOpen(true)
+                                                setId(product?.id)
+                                            }}
+                                        >
+                                            Editar producto
+                                        </button>
                                     )
                                     : (
                                         <>
-                                            <div className="add__cart">
-                                                <div>
-                                                    <IconButton
-                                                        sx={{ color: "#283845" }}
-                                                        onClick={handleQuantityAdd}
+                                            {product?.product_stock > 0 && product?.product_availability === true
+                                                ? (
+                                                    <>
+                                                        <div className="add__cart">
+                                                            <div>
+                                                                <IconButton
+                                                                    disabled={ product?.product_stock === quantity }
+                                                                    sx={{ color: "#283845" }}
+                                                                    onClick={handleQuantityAdd}
+                                                                >
+                                                                    <AddIcon />
+                                                                </IconButton>
+                                                                <span>{quantity}</span>
+                                                                <IconButton
+                                                                    disabled={ quantity === 1 }
+                                                                    sx={{ color: "#283845" }}
+                                                                    onClick={handleQuantityRemove}
+                                                                >
+                                                                    <RemoveIcon />
+                                                                </IconButton>
+                                                            </div>
+                                                            <button
+                                                                className="button__style button__add"
+                                                                disabled={product?.product_stock <= 0}
+                                                                onClick={addToCartList}
+                                                            >
+                                                                Añadir al carrito
+                                                            </button>
+                                                        </div>
+                                                        <button
+                                                            onClick={buyNowFunc}
+                                                            className="button__style button__buy"
+                                                            disabled={product?.product_stock <= 0}
+                                                        >
+                                                            Comprar ahora
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <div
+                                                        style={{ 
+                                                            backgroundColor: "rgb(233, 128, 116)",
+                                                            color: "white",
+                                                            padding: "10px",
+                                                            borderRadius: "5px",
+                                                        }}
                                                     >
-                                                        <AddIcon />
-                                                    </IconButton>
-                                                    <span>{quantity}</span>
-                                                    <IconButton
-                                                        sx={{ color: "#283845" }}
-                                                        onClick={handleQuantityRemove}
-                                                    >
-                                                        <RemoveIcon />
-                                                    </IconButton>
-                                                </div>
-                                                <button className="button__style button__add">Añadir al carrito</button>
-                                            </div>
-                                            <button className="button__style button__buy">Comprar ahora</button>
+                                                        No disponible o sin existencias
+                                                    </div>
+                                        )}
+
                                         </>
                                     )}
-
+                                <EditProductModal open={open} handleClose={handleClose} id={id} />
                             </div>
+                            <SnackMessages 
+                                open={openSnack} 
+                                handleClose={handleCloseSnack} 
+                                type={snackType} 
+                                message={snackMessage}
+                            />
                         </div>
                     </Grid>
                 </Grid>
             </div>
         )
-        : 
-        (
-            <LoadingLogo />
-        )
+            :
+            (
+                <LoadingLogo />
+            )
 
     )
 }

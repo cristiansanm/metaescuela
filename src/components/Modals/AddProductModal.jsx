@@ -21,6 +21,7 @@ import {
 import { storage } from "../../firebase/firebasedb";
 import { Outlet } from 'react-router-dom';
 import useAuth from '../../customHooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddProductButton() {
   //Conexion con base de datos (FIREBASE) y funcion subida de archivo
@@ -44,7 +45,7 @@ export default function AddProductButton() {
     setOpenSnack(false);
   }
   const { auth } = useAuth();
-
+  const navigate = useNavigate()
   //
 
   const handleClickOpen = () => {
@@ -62,26 +63,42 @@ export default function AddProductButton() {
 
 
   const sendData = async () => {
-    let userId = localStorage.getItem('id')
-    try {
-      let payload = {
-        product_name: name,
-        product_description: description,
-        product_price: price,
-        subcategory_id_fk: subCategory,
-        product_availability: isAvailable,
-        seller_id_fk: auth?.user_id,
-        product_stock: stock,
-        product_image: ""
-      }
+    let payload = {
+      product_name: name,
+      product_description: description,
+      product_price: price,
+      subcategory_id_fk: subCategory,
+      product_availability: isAvailable,
+      seller_id_fk: auth?.user_id,
+      product_stock: stock,
+      product_image: ""
+    }
 
-      if (imageUpload == null) {
-        handleClose()
-        setOpenSnack(true)
-        setMessage("La imagen no se ha encontrado")
-        setType("error")
-        return
-      };
+    if (imageUpload == null) {
+      await ProductController.createProduct(payload)
+        .then(res => {
+          handleClose()
+          setOpenSnack(true);
+          setMessage("Producto creado correctamente.")
+          setType("success")
+          setName("");
+          setDescription("");
+          setPrice("");
+          setSubCategory("");
+          setUploadImg("");
+          setImageUpload(null);
+          setStock("");
+          setIsAvailable(true);
+          navigate('/seller')
+
+        }).catch(err => {
+          handleClose()
+          setOpenSnack(true)
+          setMessage("Error al subir el producto")
+          setType("error")
+          console.log(err)
+        })
+    } else {
       const imageRef = ref(storage, `Productos/${imageUpload.name}`);
       uploadBytes(imageRef, imageUpload).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
@@ -101,7 +118,8 @@ export default function AddProductButton() {
               setImageUpload(null);
               setStock("");
               setIsAvailable(true);
-              
+              navigate('/seller')
+
             }).catch(err => {
               handleClose()
               setOpenSnack(true)
@@ -112,11 +130,8 @@ export default function AddProductButton() {
 
         });
       })
-    } catch (e) {
-      setOpenSnack(true);
-      setMessage(e);
-      setType("error");
     }
+
   }
 
   return (
@@ -164,8 +179,8 @@ export default function AddProductButton() {
                     <div>
                       <button onClick={() => setUploadImg("")}>Eliminiar</button>
                     </div>
-                    
-                    
+
+
                   </div>)
                   : (
                     <div className="insert__image__container">
@@ -226,7 +241,7 @@ export default function AddProductButton() {
                     </Grid>
                   </Grid>
                   <Grid container spacing={2}>
-                    <Grid sx={{my: 1}} item xs={5}>
+                    <Grid sx={{ my: 1 }} item xs={5}>
                       <TextField
                         autoFocus
                         margin="stock"

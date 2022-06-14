@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import logo from "../../../assets/img/Login/Logo_MetaEscuela.png"
 import UserInfoModal from '../../Modals/UserInfoModal';
 import { IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#283845',
@@ -70,7 +71,11 @@ const TableSingleOrder = ({ data, headers }) => {
                         width="32"
                     />
                   </StyledTableCell>
-                  <StyledTableCell align="right">{product?.id}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    {<Link 
+                      style={{color: "#283845"}}
+                      to={`/products/${product?.id}`}>{product?.id}</Link> }
+                  </StyledTableCell>
                   <StyledTableCell align="right">
                       {product?.product_name}
                   </StyledTableCell>
@@ -99,7 +104,7 @@ const TableSingleOrder = ({ data, headers }) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <UserInfoModal open={open} handleClose={handleClose} type={"Vendedor"} id={id}/>
+        <UserInfoModal open={open} handleClose={handleClose} type={"vendedor"} id={id}/>
     </>
     
   )

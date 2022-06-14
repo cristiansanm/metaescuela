@@ -25,7 +25,23 @@
     display:flex;
     font-weight: 600;
     justify-content: center;
-    gap: 20px
+    gap: 20px; 
+}
+
+.empty__central__img{
+    animation: centralImg  3s infinite;
+}
+@keyframes centralImg{
+    0% {
+        transform: translateY(0px);
+      }
+      20% {
+        transform: translateY(-24px);
+      }
+      
+      40%, 100% {
+        transform: translateY(0);
+      }
 }
 .empty__buttons{
     display: flex;

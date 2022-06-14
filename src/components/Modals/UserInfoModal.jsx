@@ -4,7 +4,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import { styled } from '@mui/material/styles';
 import wsp from "../../assets/img/Icons/whatsapp (1).png"
 import { gradesNames } from '../../assets/js/formaters';
 
@@ -27,7 +26,7 @@ export default function UserInfoModal({ type, id, open, handleClose }) {
 
         }
         getMiniInfo()
-    })
+    }, [id])
     return (
         <div>
             <Dialog
@@ -36,28 +35,57 @@ export default function UserInfoModal({ type, id, open, handleClose }) {
                 keepMounted
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 5
+                }}
             >
-                <DialogTitle>Detalles del {type}</DialogTitle>
+                <DialogTitle
+                    sx={{
+                        fontFamily: "Poppins, serif",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: 5,
+                        color: "#283845"
+                    }}
+                >
+                    Detalles del {type}
+                </DialogTitle>
+                <hr className="modal__divider" />
                 <DialogContent>
-                    <div>
-                        <div>
+                    <div style={{display: "flex", flexDirection: "column", gap: "20px"}}>
+                        <div className="split__data">
                             <span>Nombre: </span>
-                            <span>{userInfo?.user_name}</span>
+                            <span>{userInfo?.user_name} {userInfo?.user_lastname}</span>
                         </div>
-                        <div>
+                        <div className="split__data">
                             <span>Grado: </span>
                             <span>
                                 {gradesNames[userInfo?.user_grade]}
                             </span>
                         </div>
-                        <div>
+                        <div className="split__data">
                             <span>Teléfono: </span>
-                            <span>
-                                <img src={wsp} alt="" width="24"/>
+                            <span
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '5px'
+                                }}
+                            >
+                                <a 
+                                    target="_blank"
+                                    href={`http://web.whatsapp.com/send?text=Hola&phone=+34${userInfo?.user_phone}&abid=+34${userInfo?.user_phone}`}>
+                                    <img style={{cursor: 'pointer'}} src={wsp} alt="" width="24"/>
+                                </a>
+                                
                                 {userInfo?.user_phone}
                             </span>
                         </div>
-                        <div>
+                        <div className='mail__decoration'>
                             <span>
                                 <a
                                     href={`mailto:${userInfo?.user_email}`}
@@ -66,6 +94,14 @@ export default function UserInfoModal({ type, id, open, handleClose }) {
                                     {userInfo?.user_email}
                                 </a>
                             </span>
+                        </div>
+                        <div style={{display: "flex", justifyContent: "center" }}>
+                            <button 
+                                onClick={handleClose}
+                                className="no__button"
+                            >
+                                Cerrar
+                            </button>
                         </div>
                     </div>
                 </DialogContent>

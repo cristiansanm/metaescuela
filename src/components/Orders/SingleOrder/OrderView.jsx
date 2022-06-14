@@ -9,6 +9,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "../../../assets/scss/Orders/SingleOrder.scss"
 import SecondColumn from './SecondColumn'
+import LoadingLogo from '../../Modals/LoadingLogo'
 let headers = [
   'Img',
   'ID',
@@ -36,49 +37,57 @@ const OrderView = (order) => {
   }, [])
   return (
     <div className="single__product__container">
-      <Grid sx={{ mb: 4 }} container>
-        <Grid  item xs={12}>
-          <IconButton
-            sx={{
-              backgroundColor: "#283845",
-              color: "#F4FBFA"
-            }}
-            onClick={() => navigate(-1)}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
+      {orderData
+        ? (
+          <>
+            <Grid sx={{ mb: 4 }} container>
+              <Grid item xs={12}>
+                <IconButton
+                  sx={{
+                    backgroundColor: "#283845",
+                    color: "#F4FBFA"
+                  }}
+                  onClick={() => navigate(-1)}
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
 
-      <Grid container spacing={2}>
-        <Grid
-          sx={{
-            backgroundColor: "#EAF4F4",
-            padding: "40px 30px",
-            borderRadius: "14px",
-            border: "1px solid #283845"
-          }}
-          item
-          xs={12}
-          sm={12}
-          md={9}
-        >
-          <div className="single__order__title">
-            <img src={bagIcon} alt="bag" width="48" />
-            <ViewTitle title={`Orden Nº ${orderData?.id ? orderData?.id : 0}`} />
-          </div>
-          <div>
-            <TableSingleOrder data={orderData} headers={headers} />
-          </div>
-          <div className="single__product__total">
-            <span>TOTAL</span>
-            <span>{orderData?.order_total} €</span>
-          </div>
-        </Grid>
-        <Grid item xs={12} sm={12} md={3}>
-          <SecondColumn/>
-        </Grid>
-      </Grid>
+            <Grid container spacing={2}>
+              <Grid
+                sx={{
+                  backgroundColor: "#EAF4F4",
+                  padding: "40px 30px",
+                  borderRadius: "14px",
+                  border: "1px solid #283845"
+                }}
+                item
+                xs={12}
+                sm={12}
+                md={9}
+              >
+                <div className="single__order__title">
+                  <img src={bagIcon} alt="bag" width="48" />
+                  <ViewTitle title={`Orden Nº ${orderData?.id ? orderData?.id : 0}`} />
+                </div>
+                <div>
+                  <TableSingleOrder data={orderData} headers={headers} />
+                </div>
+                <div style={{marginTop: "20px", width: "40%"}} className="single__product__total">
+                  <span>TOTAL</span>
+                  <span>{orderData?.order_total} €</span>
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={12} md={3}>
+                <SecondColumn />
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <LoadingLogo />
+        )}
+
     </div>
 
 

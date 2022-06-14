@@ -6,7 +6,7 @@ import { TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import UserController from '../../assets/controllers/UserController';
 import SnackMessages from '../CommonUiComponents/SnackMessages';
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 const LoginForm = () => {
   const { setAuth } = useAuth();
   //Varaibles para el mensaje de alerta
@@ -14,54 +14,52 @@ const LoginForm = () => {
   const [message, setMessage] = useState('');
   const [type, setType] = useState('');
   const handleClose = () => setOpen(false);
-
   //Variables para el formulario
   const navigate =  useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm();
 
   const sendDataForLogin = async () => {
     try{
       let payload = {
-        user_email:email,
-        user_password: password
+        user_email:getValues("email"),
+        user_password: getValues("password")
       }
-      let { data } = await UserController.loginUser(payload);
-      if(data.user){
+      let dataUser  = await UserController.loginUser(payload);
+      if(dataUser?.data?.user){
         let userData = {
-          user_name : data.user.user_name,
-          user_id: data.user.id,
-          user_roles: data.user.user_roles,
-          user_token: data.token
+          user_name : dataUser?.data.user.user_name,
+          user_id: dataUser?.data.user.id,
+          user_roles: dataUser?.data.user.user_roles,
+          user_token: dataUser?.data.token
         }
         localStorage.setItem('user_name', JSON.stringify(userData.user_name));
         localStorage.setItem('user_token', JSON.stringify(userData.user_token));
         localStorage.setItem('user_id', userData.user_id)
         localStorage.setItem('user_roles', JSON.stringify(userData.user_roles));
         setAuth(userData)
-        setMessage('Bienvenid@ ' + data.user.user_name);
+        setMessage('Bienvenid@ ' + dataUser?.data.user.user_name);
         setType('success');
         setOpen(true);
         setTimeout(() => {
           navigate(from, { replace: true });
         }, 1000)
       }else{
-        setMessage(data.message);
+        console.log(dataUser)
+        setMessage(dataUser?.response?.data?.message);
         setType('error');
         setOpen(true);
       }
     }catch(error){
-
-      setMessage("Usario o contraseña incorrectos");
-      setType('error');
-      setOpen(true);
+        setMessage("Sin respuesta del servidor");
+        setType('error');
+        setOpen(true);
     }
   }
   return (
@@ -91,8 +89,6 @@ const LoginForm = () => {
               error={errors.email ? true : false}
               type="email" 
               label="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
               helperText={errors.email ? errors.email.message : ""}
               />
           </div>
@@ -120,8 +116,6 @@ const LoginForm = () => {
               helperText={errors.password ? errors.password.message : ""}
               type='password' 
               label="Contraseña"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
               />
           </div>
           <button  

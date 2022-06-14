@@ -66,10 +66,7 @@ export default function NavBar() {
               xs={4}
             >
               <NavLink 
-                style={
-                  ({ isActive }) => 
-                    isActive ? NavBarStyles.activeLinkStyle : NavBarStyles.linkStyle
-                }
+                style={NavBarStyles.linkStyle}
                 to="/cart"
               >
                 <img src={cartIcon} alt="cartIcon" width="32" />

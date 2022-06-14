@@ -1,4 +1,4 @@
-import { Grid, Snackbar, TextField } from '@mui/material'
+import { Button, Grid,} from '@mui/material'
 import React from 'react'
 import ViewTitle from '../CommonUiComponents/ViewTitle'
 import userIcon from "../../assets/img/Icons/user.png"
@@ -15,21 +15,34 @@ import {
 } from "firebase/storage";
 import { storage } from "../../firebase/firebasedb";
 import UserEditForm from './UserEditForm'
-
+import "../../assets/scss/User/UserView.scss"
+import SnackMessages from '../CommonUiComponents/SnackMessages'
+import BecomeASellerModal from '../Modals/BecomeASellerModal'
+import { gradesNames } from '../../assets/js/formaters'
 
 const UserView = () => {
+    ///////////////// editar usuario
+    const [editUser, setEditUser] = useState(false)
+    const handleEditUser = () => setEditUser(false)
     const [user, setUser] = useState({});
-    const [uploadImg, setUploadImg] = useState('');
-    const [imageUpload, setImageUpload] = useState(null);
+    const [uploadImg, setUploadImg2] = useState('');
+    const [imageUpload2, setImageUpload2] = useState(null);
+    // Varaibles para el snack
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [type, setType] = useState('');
+    const handleClose = () => setOpen(false);
+    //Variables para el modal
+    const [openModal, setOpenModal] = useState(false);
+    const handleCloseModal = () => setOpenModal(false)
     const { auth } = useAuth();
-    // console.log(iduser)
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
         UserController.getOneUser({ userId: auth?.user_id })
             .then(user => isMounted && setUser(user.data.user))
             .catch(err => console.log(err))
-        
+
         return () => {
             isMounted = false;
             controller.abort();
@@ -38,15 +51,15 @@ const UserView = () => {
 
     const handleUploadImg = (e) => {
 
-        setImageUpload(e.target.files[0]);
+        setImageUpload2(e.target.files[0]);
         let img = URL.createObjectURL(e.target.files[0]);
-        setUploadImg(img)
+        setUploadImg2(img)
 
 
     }
     const uploadImgFunc = async (e) => {
-        const imageRef = ref(storage, `Usuarios/${imageUpload.name}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        const imageRef = ref(storage, `Usuarios/${imageUpload2.name}`);
+        uploadBytes(imageRef, imageUpload2).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
                 let payload = {
                     userId: auth?.user_id,
@@ -54,12 +67,21 @@ const UserView = () => {
                 }
                 UserController.addProfilePhoto(payload)
                     .then(res => {
-                        console.log(res)
-                        setImageUpload(null)
-                        setUploadImg(null)
-                        window.location.reload()
+                        setMessage("Foto actualizada correctamente")
+                        setType("success")
+                        setOpen(true)
+                        setImageUpload2(null)
+                        setUploadImg2(null)
+                        setTimeout(()=>{
+                            window.location.reload()
+                        }, 2000)
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => {
+                        setMessage("Error al actualizar la foto")
+                        setType("error")
+                        setOpen(true)
+                        console.log(error)
+                    })
 
             })
         })
@@ -69,11 +91,22 @@ const UserView = () => {
         await UserController.deleteProfilePhoto({
             userId: auth?.user_id
         })
-            .then(res => {console.log(res); window.location.reload()})
-            .catch(error => console.log(error))
+            .then(res => { 
+                setMessage("Foto eliminada correctamente") 
+                setType("success")
+                setOpen(true)
+                setTimeout(() => {
+                    window.location.reload() 
+                }, 2000) 
+            })
+            .catch(error => {
+                console.log(error)
+                setMessage("Error al eliminar la foto")
+                setType("error")
+                setOpen(true)
+            })
     }
-    ///////////////// editar usuario
-    const [editUser, setEditUser] = useState(false)
+
 
     return (
         <div className="single__product__container">
@@ -83,7 +116,6 @@ const UserView = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "flex-start",
-                        padding: "5%",
                         gap: "10px"
 
                     }}>
@@ -91,13 +123,12 @@ const UserView = () => {
                         <ViewTitle title="Perfil de usuario" />
                     </div>
                 </Grid>
-                <Grid sx={{ display: 'flex', justifyContent: 'flex-end', padding: "2%" }} item xs={3}>
-                    <img src={logo} alt="" />
+                <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} item xs={3}>
+                    <img src={logo} alt="" width="100" />
                 </Grid>
             </Grid>
             <Grid container>
                 <Grid item xs={6} id="userimagen">
-                    imagen usario
                     <div id="imgUser"></div>
                     <div id="btnUser">
                         {uploadImg ?
@@ -110,21 +141,45 @@ const UserView = () => {
                                     width: "100%"
                                 }}
                             >
-                                <img src={uploadImg} alt="imgupload" width="150" />
-                                <button id="editprofile" onClick={() => setUploadImg("")}>Eliminiar</button>
-                                <button id="editprofile2" onClick={uploadImgFunc}>Actualizar foto</button>
+                                <img src={uploadImg} alt="imgupload" width="350" />
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        gap: "10px",
+                                        marginTop: "20px"
+                                    }}
+                                >
+                                    <button className='no__button' onClick={() => setUploadImg2("")}>Eliminiar</button>
+                                    <button className='button__buy' onClick={uploadImgFunc}>Actualizar foto</button>
+                                </div>
+
 
                             </div>)
                             : (
-                                <div className="insert__image__container">
-                                    <label htmlFor="inputPhoto">
-                                        <div>
-                                            <img src={user?.user_profile_image ? user.user_profile_image : Avatar} width="80%" alt="" />
-                                        </div>
-                                        <input type="file" accept="image/*" name="image" id="file" onChange={handleUploadImg} />
-                                    </label>
+                                <div className="no__photo__container">
+                                    <div
+                                        style={{
+                                            marginBottom: "20px",
+                                        }}
+                                    >
+                                        <img src={user?.user_profile_image ? user.user_profile_image : Avatar} width="350" alt="" />
+                                    </div>
+                                    {!user?.user_profile_image &&
+                                        (<>
+                                            <label htmlFor="inputPhoto2">
+                                                <span
+                                                    style={{
+                                                        padding: "5px 15px",
+                                                    }}
+                                                    className="button__buy"
+                                                >Cambiar foto</span>
+                                                <input type="file" accept="image/*" name="inputPhoto2" id="inputPhoto2" onChange={handleUploadImg} />
+                                            </label>
+                                        </>)}
+
                                     {
-                                        user?.user_profile_image && <button id="editprofile" onClick={deletePhoto}> Eliminar foto actual</button>
+                                        user?.user_profile_image && <button className="no__button" onClick={deletePhoto}> Eliminar foto</button>
                                     }
 
                                 </div>
@@ -138,62 +193,85 @@ const UserView = () => {
 
                     {editUser ?
                         (
-                            <UserEditForm />
-
-
+                            <UserEditForm getBack={handleEditUser} />
                         ) : (
-                            <>
-
-                                <div id='separa'>
+                            <div 
+                                style={{padding: "30px"}}
+                                className="data__container">
+                                
+                                <div className="split__data">
                                     <span>
                                         Nombre
                                     </span>
-                                    <span id="separa"> {user?.user_name ? user.user_name : "-"} </span>
+                                    <span> {user?.user_name ? user.user_name : "-"} </span>
                                 </div>
                                 <hr />
-                                <div id='separa'>
+                                <div className="split__data">
                                     <span>
                                         Apellido
                                     </span>
-                                    <span id="separa"> {user?.user_lastname ? user.user_lastname : "-"} </span>
+                                    <span> {user?.user_lastname ? user.user_lastname : "-"} </span>
                                 </div>
                                 <hr />
-                                <div id='separa'>
+                                <div className="split__data">
                                     <span>
                                         Grado
                                     </span>
-                                    <span id="separa"> {user?.user_grade ? user.user_grade : "-"} </span>
+                                    <span> {user?.user_grade ? gradesNames[user.user_grade] : "-"} </span>
 
                                 </div>
                                 <hr />
-                                <div id='separa'>
+                                <div className="split__data">
                                     <span>
-                                        Telefono
+                                        Email
                                     </span>
-                                    <span id="separa"> {user?.user_phone ? user.user_phone : "-"} </span>
+                                    <span> {user?.user_email ? user.user_email : "-"} </span>
                                 </div>
                                 <hr />
-                                <div id='separa'>
+                                <div className="split__data">
+                                    <span>
+                                        Télefono
+                                    </span>
+                                    <span> {user?.user_phone ? user.user_phone : "-"} </span>
+                                </div>
+                                <hr />
+                                <div className="split__data">
                                     <span>
                                         Roles
                                     </span>
-                                    <span id="separa"> {user?.user_is_buyer === true ? "Comprador" : ""}{user?.user_is_seller === true ? "Vendedor" : ""} </span>
+                                    <span> {user?.user_is_buyer === true ? "Comprador, " : ""}{user?.user_is_seller === true ? "Vendedor" : ""} </span>
                                 </div>
-                                <div id='botyspan'>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        marginTop: "20px"
+                                    }}
+                                >
 
-                                    <button id='editprofile' onClick={() => setEditUser(true)}>Editar perfil</button> <span id='lastspan'>¿Quieres ser vendedor?</span>
+                                    <Button color="error" onClick={() => setEditUser(true)}>Editar perfil</Button>
+                                    {!auth?.user_roles?.includes("SELLER") && (
+                                        <Button 
+                                            onClick={() => setOpenModal(true)}
+                                            sx={{color: "#4399A5"}} 
+                                        >¿Quieres ser vendedor?</Button>
+                                    )}
+                                    
 
                                 </div>
-                            </>
-
+                            </div>
                         )
-
                     }
 
                 </Grid>
             </Grid>
-
-
+        <BecomeASellerModal open={openModal} handleClose={handleCloseModal}/>
+        <SnackMessages 
+            open={open} 
+            handleClose={handleClose}
+            message={message}
+            type={type}
+        />
         </div>
     )
 }

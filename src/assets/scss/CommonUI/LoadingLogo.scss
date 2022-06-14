@@ -1,5 +1,11 @@
 .img__logo{
-    animation: mylogo 3s infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+       animation: mylogo 3s infinite; 
+    }
+    
 }
 .sad__face__animation{
     animation: sadface 3s infinite;
