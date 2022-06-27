@@ -1,0 +1,9 @@
+.app__bar{
+    background-color: #283845;
+}
+
+@media screen and (max-width: 992px) {
+    .appbar{
+        display:none;
+    }
+}   

@@ -1,0 +1,131 @@
+.add__button__container{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+.modal__divider{
+    width: 92%;
+    border: 1.5px solid #283845;
+    background-color: #283845;
+    margin: 0 auto;
+}
+.insert__image__container{
+    font-size: 14px;
+    margin-bottom: 10px;
+    label{
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+    div{
+        border: 1px solid #283845;
+        border-radius: 5px;
+        padding:6%;
+    }
+    input{
+        display: none;
+    }
+    
+}
+.uploaded__img{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    button{
+        height: 40px;
+        padding: 0 10%;
+        font-size: 18px;
+        font-weight: 600;
+        border: 1px solid #283845;
+        border-radius: 5px;
+        background-color: #EF6151;
+        color: #F4FBFA;
+        margin: 10px 0;
+    }
+}
+.button__buy{
+    height: 40px;
+    padding: 0 20px;
+    color: #F4FBFA;
+    border: 1px solid #283845;
+    box-sizing: border-box;
+    border-radius: 9px;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: "Poppins", serif;
+    background-color: #75DDD8;
+    border: 1px solid #283845;
+    cursor: pointer;
+    &:hover{
+        background-color: #44aea9;
+        color: #F4FBFA;
+    }
+    &:active{
+        background-color: #11736e;
+        color: #F4FBFA;
+        transform: translateY(2px);
+    }
+    &:disabled{
+        background-color: #bfd0dd;
+        color: #F4FBFA;
+        cursor:not-allowed;
+    }
+}
+.no__button{
+    height: 40px;
+    padding: 0 20px;
+    background: #EF6151;
+    color: #F4FBFA;
+    border: 1px solid #283845;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+    border-radius: 9px;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: "Poppins", serif;
+    cursor: pointer;
+    &:hover{
+        background: #ed8282;
+        color: #F4FBFA;
+        border: 1px solid #283845;
+        box-sizing: border-box;
+        border-radius: 9px;
+        cursor: pointer;
+    }
+    &:active{
+        transform: translateY(2px);
+        background-color: #de7070;
+    }
+}
+.empty__divider{
+    color: #DAE6E5;
+    border-right: 2px solid #283845;
+}
+.split__data{
+    display: flex;
+    justify-content: space-between;
+    span:first-child{
+        font-weight: 600;
+        font-family: "Poppins", serif;
+        color: #283845;
+    }
+}
+.mail__decoration{
+    display: flex;
+    justify-content: center;
+    a{
+        color: #283845;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: "Poppins", serif;
+        &:active{
+            color: #283845;
+        }
+    }
+}
